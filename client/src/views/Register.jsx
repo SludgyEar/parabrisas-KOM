@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import "./registerStyle.css"; // Asegúrate de importar tu CSS
 
@@ -24,15 +24,15 @@ function Register() {
         try {
             await axios.post("http://localhost:5000/usuarios", usuario);
             navigate("/");
-        } catch (err) {
-            console.log(err);
-        }
+        } catch (err) {console.log(err);}
     };
 
     return (
         <div>
             <header>
-                <div className="logo">Parabrisas KOM</div>
+                <div className="logo" id="logo">
+                    <Link to="/"> <h1 className="logo" id="nombre-logo">Parabrisas Kom</h1> </Link>
+                </div>
             </header>
 
             <main>

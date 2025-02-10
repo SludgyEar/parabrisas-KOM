@@ -6,40 +6,59 @@ body {
     color: #333;
 }
 
+/* Header */
 header {
     background-color: #444;
     color: #fff;
     padding: 10px 20px;
     display: flex;
     justify-content: space-between;
+    /* Espacio entre logo y menú */
     align-items: center;
 }
 
-header .logo {
+/* Logo */
+.logo {
     font-size: 1.5em;
     font-weight: bold;
 }
 
-header nav ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-}
-
-header nav ul li {
-    margin: 0 10px;
-}
-
-header nav ul li a {
+/* Logo como enlace */
+.logo a {
     color: #fff;
     text-decoration: none;
 }
 
-header nav ul li a:hover {
-    text-decoration: underline;
+/* Hover para el logo */
+.logo a:hover {
+    color: #ddd;
 }
 
+/* Navegación */
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    /* Alinea los elementos en una línea */
+}
+
+/* Elementos del menú */
+nav ul li {
+    margin: 0 15px;
+}
+
+/* Enlaces del menú */
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1em;
+}
+
+/* Hover en enlaces */
+nav ul li a:hover {
+    color: #ddd;
+}
 /* Login Box */
 main {
     display: flex;

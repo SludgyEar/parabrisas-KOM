@@ -3,18 +3,11 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Home from "./views/Home";
 import Login from "./views/Login";
 import Register from "./views/Register";
+import "./App.css";
 
 function App() {
   return (
     <Router>
-      <nav>
-        <ul>
-          <li><Link to="/">Inicio</Link></li>
-          <li><Link to="/login">Login</Link></li>
-          <li><Link to="/register">Registro</Link></li>
-        </ul>
-      </nav>
-
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />

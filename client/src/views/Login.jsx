@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import "./loginStyle.css"; // Asegúrate de tener el archivo CSS en la misma carpeta
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 function App() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+
+    const navigate = useNavigate();
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -15,8 +17,11 @@ function App() {
 
     return (
         <div>
+
             <header>
-                <div className="logo">Parabrisas KOM</div>
+                <div className="logo">
+                    <Link to="/">Parabrisas KOM</Link>
+                </div>
                 <nav>
                     <ul>
                         <li><a href="#">Inicio</a></li>
@@ -25,6 +30,7 @@ function App() {
                     </ul>
                 </nav>
             </header>
+
 
             <main>
                 <div className="login-box">
@@ -54,9 +60,8 @@ function App() {
 
                         <button type="submit">Iniciar sesión</button>
                     </form>
-                    <button id="register-button"><Link to="/Register">¿No tienes una cuenta?</Link></button>
-                    <button id="forgot-button"><Link to="#">¿Olvidaste tu contraseña?</Link></button>
-                    <a href="#" className="forgot-password">¿Olvidaste tu contraseña?</a>
+                    <button id="register-button" onClick={() => navigate("/register")}>¿No tienes una cuenta?</button>
+                    <button id="forgot-button" onClick={() => navigate("/register")}>¿Olvidaste tu contraseña?</button>
                 </div>
             </main>
 
