@@ -1,20 +1,41 @@
 import React, { useState } from "react";
 import "./loginStyle.css"; // Asegúrate de tener el archivo CSS en la misma carpeta
 import { useNavigate, Link } from "react-router-dom";
+import CryptoJS from "crypto-js";
+import axios from "axios";
 
 function App() {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-
+    const [email, setEmail] = useState({
+        email: ""
+    });
+    const [passwd, setPasswd] = useState({
+        passwd: ""
+    });
+    const [error, setError] = useState();
+    
     const navigate = useNavigate();
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log("Usuario:", email);
-        console.log("Contraseña:", password);
-        // Aquí puedes agregar la lógica para enviar los datos al backend
+    const handlePasswd = (e) => {
+        setPasswd(e.target.value);
     };
 
+    const handleEmail = (e) => {
+        setEmail(e.target.value);
+    };
+
+    
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setError("");
+        const encryptedPasswd = CryptoJS.SHA256(passwd).toString();
+        try {
+            const res = await axios.post("http://localhost:5000/login", { correo: email, passwd: encryptedPasswd });
+            if (res.status === 201) {
+                navigate("/dashboard");
+            }
+        } catch (err) {console.log(err);}
+    };
+    
     return (
         <div>
 
@@ -43,19 +64,17 @@ function App() {
                             name="email"
                             placeholder="Ingresa tu correo"
                             required
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
+                            onChange={handleEmail}
                         />
 
                         <label htmlFor="password">Contraseña</label>
                         <input
                             type="password"
                             id="password"
-                            name="password"
+                            name="passwd"
                             placeholder="Ingresa tu contraseña"
                             required
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
+                            onChange={handlePasswd}
                         />
 
                         <button type="submit">Iniciar sesión</button>

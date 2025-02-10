@@ -1,5 +1,5 @@
 import express from 'express';
-import {getUsers, getUserById, createUser} from './database.js';
+import {getUsers, getUserById, createUser, loginUser} from './database.js';
 import cors from 'cors';
 
 const app = express();
@@ -8,14 +8,14 @@ app.use(cors());
 
 app.get("/usuarios", async(req, res) => {
     const users = await getUsers();
-    res.send(users);
+    res.status(201).send(users);
     // Obtener usuarios
 });
 
 app.get("/usuarios/:id", async (req, res) => {
     const id = req.params.id;
     const user = await getUserById(id);
-    res.send(user);
+    res.status(201).send(user);
     // Obtener usuario por id
 });
 
@@ -24,6 +24,23 @@ app.post("/usuarios", async (req, res) => {
     const user = await createUser(nombre, correo, passwd, perfil, status);
     res.status(201).send(user);
     // Crear usuario
+});
+
+app.post("/login", async (req, res) => {
+    const {correo, passwd} = req.body;
+    try {
+        const user = await loginUser(correo, passwd);
+        if (user){
+            res.status(201).send(user);
+            console.log('Usuario autenticado');
+            
+        } else {
+            res.status(401).send('Usuario o contraseña incorrectos');
+            console.log('Usuario no autenticado');
+            
+        }
+    } catch (error) {console.log(error);}
+    // Autenticar usuario
 });
 
 app.use((err, req, res, next) => {

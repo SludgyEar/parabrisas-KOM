@@ -32,3 +32,13 @@ export async function createUser(nombre, correo, passwd, perfil, status){
     const id = result.insertId  // Obtenemos el id que se generó al insertar el registro
     return getUserById(id);     // Desplegamos el registro que acabamos de insertar
 }
+
+export async function loginUser(correo, passwd){
+    const [rows] = await pool.query(`
+        SELECT NOMBRE_USR
+        FROM USUARIOS
+        WHERE CORREO_USR = ?
+        AND PASSWD_USR = ?
+        `, [correo, passwd]);
+    return rows[0];
+}
