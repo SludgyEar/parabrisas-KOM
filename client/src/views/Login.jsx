@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./loginStyle.css"; // Asegúrate de tener el archivo CSS en la misma carpeta
+import { Link } from "react-router-dom";
 
 function App() {
     const [email, setEmail] = useState("");
@@ -53,7 +54,8 @@ function App() {
 
                         <button type="submit">Iniciar sesión</button>
                     </form>
-                    <a href="#" className="forgot-password">¿No tienes una cuenta?</a>
+                    <button id="register-button"><Link to="/Register">¿No tienes una cuenta?</Link></button>
+                    <button id="forgot-button"><Link to="#">¿Olvidaste tu contraseña?</Link></button>
                     <a href="#" className="forgot-password">¿Olvidaste tu contraseña?</a>
                 </div>
             </main>
