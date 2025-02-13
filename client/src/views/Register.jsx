@@ -22,7 +22,7 @@ function Register() {
     const handleSubmit = async (e) =>{
         e.preventDefault();
         try {
-            await axios.post("http://localhost:5000/usuarios", usuario);
+            await axios.post("http://localhost:5000/register", usuario);
             navigate("/");
         } catch (err) {console.log(err);}
     };
@@ -89,15 +89,15 @@ export default Register;
 
 
 /*
-    const [usuarios, setUsuarios] = useState([]);
-    useEffect(() => {
-        const fetchUsuarios = async () => {
-            try{
-                const res = await axios.get("http://localhost:3000/usuarios");
-                setUsuarios(res.data);
-            }catch(error){console.log(error);}
-        };
-    }, []);
-
-    Esta función traería a todos los usuarios
+    Tatis:
+    En un sistema qué entidades de negocio tengo: entidad casi siempre = objeto
+    Banco:
+        Clientes, prestamos, tarjetas, sucursales, etc.
+    Estas entdades qué mensajes envían: Si quiero una consulta de un tarjeta ¿qué tengo que enviar?
+    "Si quiero preguntar si esta tarjeta existe, puedo preguntar por
+    Número
+    Dueño
+    Redefinir qué va a hacer el sistema"
+    Entidades y qué desarrollan
+    Roles - Actividades que desempeña cada elemento dentro del sistema
 */

@@ -28,7 +28,7 @@ export async function createUser(nombre, correo, passwd, perfil, status){
     const [result] = await pool.query(`
         INSERT INTO USUARIOS (NOMBRE_USR, CORREO_USR, PASSWD_USR, PERFIL_USR, STATUS_USR)
         VALUES (?, ?, ?, ?, ?)
-        `, [nombre, correo, passwd, perfil, status]);
+        `, [nombre, correo, passwd, perfil, status]);   // Si no se recibe el perfil y status, en la base de datos se asignan valores por defecto
     const id = result.insertId  // Obtenemos el id que se generó al insertar el registro
     return getUserById(id);     // Desplegamos el registro que acabamos de insertar
 }

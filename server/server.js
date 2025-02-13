@@ -19,7 +19,7 @@ app.get("/usuarios/:id", async (req, res) => {
     // Obtener usuario por id
 });
 
-app.post("/usuarios", async (req, res) => {
+app.post("/register", async (req, res) => {
     const {nombre, correo, passwd, perfil, status} = req.body;
     const user = await createUser(nombre, correo, passwd, perfil, status);
     res.status(201).send(user);
