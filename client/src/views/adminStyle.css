@@ -31,6 +31,7 @@ header {
 /* Hover para el logo */
 .logo a:hover {
     color: #ddd;
+    box-shadow: 0 0 5px #444, 0 0 10px white, 0 0 15px #ccc, 0 0 20px #ddd;
 }
 
 /* Navegación */
@@ -56,6 +57,7 @@ nav ul li a {
 /* Hover en enlaces */
 nav ul li a:hover {
     color: #ddd;
+    box-shadow: 0 0 5px #444, 0 0 10px white, 0 0 15px #ccc, 0 0 20px #ddd;
 }
 
 .container {
@@ -100,6 +102,46 @@ input[type="submit"] {
 
 input[type="submit"]:hover {
     background-color: #555;
+    box-shadow: 0 0 5px #444, 0 0 10px white, 0 0 15px #ccc, 0 0 20px #ddd;
+}
+
+.select-container::after {
+    content: "▼"; 
+    position: absolute;
+    right: 15px;
+    pointer-events: none;
+    color: #ddd;
+}
+.select-container {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: space-evenly;
+    /* Distribuye los elementos de forma equilibrada */
+    width: 100%;
+}
+
+.select-custom {
+    background-color: #444;
+    color: white;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 8px 12px;
+    transition: all 0.3s ease-in-out;
+    flex: 1;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    text-align: center;
+    /* Centra el texto */
+    min-width: 120px;
+    /* Asegura que los selects tengan un tamaño mínimo */
+}
+
+.select-custom:focus {
+    outline: none;
+    border-color: #ddd;
+    box-shadow: 0 0 5px #444, 0 0 10px white, 0 0 15px #ccc, 0 0 20px #ddd;
 }
 
 table {

@@ -8,8 +8,8 @@ const AdminCrud = () => {
         nombre: "",
         correo: "",
         passwd: "",
-        perfil: "",
-        status: ""
+        perfil: "A",
+        status: "1"
     });
 
     const handleNewUser = (e) =>{
@@ -20,10 +20,15 @@ const AdminCrud = () => {
         e.preventDefault();
         try {
             await axios.post("http://localhost:5000/register", newUser);
-            navigate("/adminCrud")
-            // Envia la info del nuevo usuario al servidor
-        } catch (err) {console.log(err);}
+            const form = e.target; 
+            form.nombre.value = form.correo.value = form.passwd.value = form.perfil.value = form.status.value = '';
+            setNewUser('');
+        } catch (err) {
+            console.log(err);
+        }
+        // Inserta un nuevo usuario en la base de datos
     };
+
 
     return (
         <div>
@@ -40,13 +45,13 @@ const AdminCrud = () => {
             </header>
 
             <div className="container">
+                Delimiter
                 <div className="section">
                     <h2>Filtrar Usuarios</h2>
                     <form >
                         <input
                             type="text"
                             placeholder="Buscar por correo"
-                            
                             required
                         />
                         <input type="submit" value="Buscar Usuario" />
@@ -81,25 +86,38 @@ const AdminCrud = () => {
                         </tbody>
                     </table>
                 </div>
-
+                            Delimiter
                 <div className="section">
                     <h2>Agregar Usuario</h2>
                     <form onSubmit={handleInsert}>
-                        <input type="text" placeholder="Nombre" name="nombre" onChange={handleNewUser} required />
-                        <input type="text" placeholder="Correo" name="correo" onChange={handleNewUser} required />
-                        <input type="password" placeholder="Contraseña" name="passwd" onChange={handleNewUser} required />
-                        <input type="text" placeholder="Perfil" name="perfil" onChange={handleNewUser} />
-                        <input type="text" placeholder="Status" name="status" onChange={handleNewUser} />
-                        <button type="submit">Agregar Usuario</button>
+                        <input type="text" placeholder="Nombre" name="nombre" onChange={handleNewUser} value={newUser.nombre} required />
+                        <input type="text" placeholder="Correo" name="correo" onChange={handleNewUser} value={newUser.correo} required />
+                        <input type="password" placeholder="Contraseña" name="passwd" onChange={handleNewUser} value={newUser.passwd} required />
+                        <div className="select-container">
+                            <select name="perfil" className="select-custom" value={newUser.perfil} onChange={handleNewUser}>
+                                <option value="A">A</option>
+                                <option value="B">B</option>
+                                <option value="C">C</option>
+                                <option value="D">D</option>
+                                <option value="E">E</option>
+                            </select>
+
+                            <select name="status" className="select-custom" value={newUser.status} onChange={handleNewUser}>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                            </select>
+                        </div>
+
+                        <input type="submit" value="Agregar Usuario" id="insert-user"/>
                     </form>
 
                     <h2>Modificar Usuario</h2>
                     <form >
-                        <input type="text" placeholder="Nombre"  required />
-                        <input type="text" placeholder="Nuevo correo"  />
-                        <input type="password" placeholder="Nueva contraseña"  />
-                        <input type="text" placeholder="Nuevo perfil (A/B)"  />
-                        <input type="text" placeholder="Nuevo status (1/2)"  />
+                        <input type="text" placeholder="Nombre" required />
+                        <input type="text" placeholder="Nuevo correo" />
+                        <input type="password" placeholder="Nueva contraseña" />
+                        <input type="text" placeholder="Nuevo perfil (A/B)" />
+                        <input type="text" placeholder="Nuevo status (1/2)" />
                         <input type="submit" value="Modificar Usuario" />
                     </form>
                 </div>

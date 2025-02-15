@@ -12,8 +12,6 @@ create table usuarios(
     alta_usr TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
-SELECT * FROM USUARIOS;
-
 INSERT INTO usuarios (correo_usr, passwd_usr, perfil_usr, status_usr) VALUES ('uno@ejemplo.com', '1', 'A', '1');
 INSERT INTO usuarios (correo_usr, passwd_usr, perfil_usr, status_usr) VALUES ('dos@ejemplo.com', '2', 'A', '1');
 INSERT INTO usuarios (correo_usr, passwd_usr, perfil_usr, status_usr) VALUES ('tres@ejemplo.com', '3', 'A', '2');
@@ -21,7 +19,6 @@ INSERT INTO usuarios (correo_usr, passwd_usr, perfil_usr, status_usr) VALUES ('c
 INSERT INTO usuarios (correo_usr, passwd_usr, perfil_usr, status_usr) VALUES ('cinco@ejemplo.com', '5', 'B', '1');
 
 -- DELETE FROM USUARIOS where 1=1;
--- ALTER TABLE USUARIOS AUTO_INCREMENT = 1;
 
 DELIMITER //
 CREATE TRIGGER before_insert_password
@@ -33,10 +30,13 @@ END;
 //
 DELIMITER ;
 
+SELECT * FROM USUARIOS;
+ALTER TABLE USUARIOS AUTO_INCREMENT = 6;
+
 UPDATE usuarios SET nombre_usr = 'uno' WHERE correo_usr = 'uno@ejemplo.com';
 UPDATE usuarios SET nombre_usr = 'dos' WHERE correo_usr = 'dos@ejemplo.com';
 UPDATE usuarios SET nombre_usr = 'tres' WHERE correo_usr = 'tres@ejemplo.com';
 UPDATE usuarios SET nombre_usr = 'cuatro' WHERE correo_usr = 'cuatro@ejemplo.com';
 UPDATE usuarios SET nombre_usr = 'cinco' WHERE correo_usr = 'cinco@ejemplo.com';
 UPDATE usuarios SET nombre_usr = 'six' WHERE correo_usr = 'six@ejemplo.com';
-DELETE FROM USUARIOS WHERE ID_USR = 9;
+DELETE FROM USUARIOS WHERE ID_USR > 5;
