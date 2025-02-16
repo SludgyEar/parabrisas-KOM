@@ -49,7 +49,7 @@ export async function getUserByEmail(correo) {
     const [rows] = await pool.query(`
         SELECT *
         FROM USUARIOS
-        WHRERE CORREO_USR = ?
+        WHERE CORREO_USR = ?
         `, [correo]);
     return rows;
     // Regresa el nombre del usuario con el correo dado

@@ -30,7 +30,8 @@ const AdminCrud = () => {
     };
 
     // Search:
-
+    
+    const [filtro, setFiltro] = useState({tipo: "nombre"});
     const [currUsrs, setCurrUsrs] = useState([]);   // Lista de usuarios a desplegar
     const [valueUsr, setValueUser] = useState({
         value: ""
@@ -47,11 +48,9 @@ const AdminCrud = () => {
         getCurrUsrs();
     }, []);
 
-    const [filtro, setFiltro] = useState({tipo: "nombre"});
-    const handleFiltro = (e) =>{
+    const handleFiltro = (e) => {
         const tipo = e.target.name;
-        setFiltro(tipo);
-        // Obtiene el filtro de búsqueda en la var filtro
+        setFiltro({ tipo });
     };
 
     const handleValueUser = (e) => {
@@ -70,7 +69,7 @@ const AdminCrud = () => {
             } else {
                 await getCurrUsrs(); // Si no hay valor, obtén todos los usuarios
             }
-            setValueUser({}); // Limpiar el input de búsqueda
+            setValueUser({ value: "" });
         } catch (err) {
             console.log(err);
         }
@@ -92,47 +91,10 @@ const AdminCrud = () => {
                 </nav>
             </header>
 
-            <div className="container">
+            <div className="container" id="contenedor">
 
-                {/* Búsqueda de usuarios */}
-
-                <div className="section">
-                    <h2>Filtrar Usuarios</h2>
-                    <button className="filtro-select" onClick={handleFiltro} name="id">ID</button>
-                    <button className="filtro-select" onClick={handleFiltro} name="nombre">Nombre</button>
-                    <button className="filtro-select" onClick={handleFiltro} name="correo">Correo</button>
-                    <form onSubmit={handleCurrUsrs}>
-                        <input type="text" placeholder="Buscar por " name="value" id="input-search" onChange={handleValueUser} required />
-                        <input type="submit" value="Buscar Usuario" />
-                    </form>
-
-                    <h2>Lista de Usuarios</h2>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Nombre</th>
-                                <th>Correo</th>
-                                <th>Contraseña</th>
-                                <th>Perfil</th>
-                                <th>Status</th>
-                                <th>Alta</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {Array.isArray(currUsrs) && currUsrs.map((usuario) => (
-                                <tr key={usuario.id}>
-                                    <td>{usuario.nombre}</td>
-                                    <td>{usuario.correo}</td>
-                                    <td>{usuario.id}</td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-
-                </div>
-                            {/* Creación de usuarios */}
-                <div className="section">
+                {/* Creación de usuarios */}
+                <div className="section" id="insert">
                     <h2>Agregar Usuario</h2>
                     <form onSubmit={handleInsert}>
                         <input type="text" placeholder="Nombre" name="nombre" onChange={handleNewUser} value={newUser.nombre} required />
@@ -153,18 +115,52 @@ const AdminCrud = () => {
                             </select>
                         </div>
 
-                        <input type="submit" value="Agregar Usuario" id="insert-user"/>
+                        <input type="submit" value="Agregar Usuario" id="insert-user" />
+                    </form>
+                </div>
+
+                {/* Búsqueda de usuarios */}
+
+                <div className="section" id="tabla">
+                    <h2>Filtrar Usuarios</h2>
+                    <button className="filtro-select" onClick={handleFiltro} name="id">ID</button>
+                    <button className="filtro-select" onClick={handleFiltro} name="nombre">Nombre</button>
+                    <button className="filtro-select" onClick={handleFiltro} name="correo">Correo</button>
+                    <form onSubmit={handleCurrUsrs}>
+                        <input type="text" placeholder={`Buscar por ${filtro.tipo}`} name="value" id="input-search" onChange={handleValueUser}  />
+                        <input type="submit" value="Buscar Usuario" id="buscar-usuario" />
                     </form>
 
-                    <h2>Modificar Usuario</h2>
-                    <form >
-                        <input type="text" placeholder="Nombre" required />
-                        <input type="text" placeholder="Nuevo correo" />
-                        <input type="password" placeholder="Nueva contraseña" />
-                        <input type="text" placeholder="Nuevo perfil (A/B)" />
-                        <input type="text" placeholder="Nuevo status (1/2)" />
-                        <input type="submit" value="Modificar Usuario" />
-                    </form>
+                    <h2>Lista de Usuarios</h2>
+                    <div id="tabla-container" className="section">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nombre</th>
+                                    <th>Correo</th>
+                                    <th>Contraseña</th>
+                                    <th>Perfil</th>
+                                    <th>Status</th>
+                                    <th>Alta</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {Array.isArray(currUsrs) && currUsrs.map((usuario) => (
+                                    <tr key={usuario.id}>
+                                        <td>{usuario.id_usr}</td>
+                                        <td>{usuario.nombre_usr}</td>
+                                        <td>{usuario.correo_usr}</td>
+                                        <td>{usuario.passwd_usr}</td>
+                                        <td>{usuario.perfil_usr}</td>
+                                        <td>{usuario.status_usr}</td>
+                                        <td>{usuario.alta_usr}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+
                 </div>
             </div>
             <footer>
