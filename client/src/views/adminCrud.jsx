@@ -3,7 +3,7 @@ import axios from "axios";
 import "./adminStyle.css";
 
 const AdminCrud = () => {
-
+    // Insert:
     const [newUser, setNewUser] = useState({
         nombre: "",
         correo: "",
@@ -29,6 +29,54 @@ const AdminCrud = () => {
         // Inserta un nuevo usuario en la base de datos
     };
 
+    // Search:
+
+    const [currUsrs, setCurrUsrs] = useState([]);   // Lista de usuarios a desplegar
+    const [valueUsr, setValueUser] = useState({
+        value: ""
+    });   // {id, nombre, correo} a buscar para generar la lista
+
+    const getCurrUsrs = async () =>{
+        try {
+            const response = await axios.get("http://localhost:5000/usuarios");
+            setCurrUsrs(response.data);
+        } catch (err) { console.log(err); }
+    };
+
+    useEffect(() => {
+        getCurrUsrs();
+    }, []);
+
+    const [filtro, setFiltro] = useState({tipo: "nombre"});
+    const handleFiltro = (e) =>{
+        const tipo = e.target.name;
+        setFiltro(tipo);
+        // Obtiene el filtro de búsqueda en la var filtro
+    };
+
+    const handleValueUser = (e) => {
+        setValueUser(prev => ({...prev, [e.target.name]: e.target.value}));
+        // Obtiene el id, nombre o correo a buscar
+    };
+    const handleCurrUsrs = async (e) => {
+        e.preventDefault();
+        try {
+            let response = null;
+            if (valueUsr.value) { // Solo busca si hay un valor ingresado
+                response = await axios.get("http://localhost:5000/usuarios", {
+                    params: { [filtro.tipo]: valueUsr.value } // Usa el tipo de filtro como clave
+                });
+                setCurrUsrs(response.data);
+            } else {
+                await getCurrUsrs(); // Si no hay valor, obtén todos los usuarios
+            }
+            setValueUser({}); // Limpiar el input de búsqueda
+        } catch (err) {
+            console.log(err);
+        }
+    };
+    // Una vez se busqué el usuario debe de limpiar el label de búsqueda
+
 
     return (
         <div>
@@ -45,15 +93,16 @@ const AdminCrud = () => {
             </header>
 
             <div className="container">
-                Delimiter
+
+                {/* Búsqueda de usuarios */}
+
                 <div className="section">
                     <h2>Filtrar Usuarios</h2>
-                    <form >
-                        <input
-                            type="text"
-                            placeholder="Buscar por correo"
-                            required
-                        />
+                    <button className="filtro-select" onClick={handleFiltro} name="id">ID</button>
+                    <button className="filtro-select" onClick={handleFiltro} name="nombre">Nombre</button>
+                    <button className="filtro-select" onClick={handleFiltro} name="correo">Correo</button>
+                    <form onSubmit={handleCurrUsrs}>
+                        <input type="text" placeholder="Buscar por " name="value" id="input-search" onChange={handleValueUser} required />
                         <input type="submit" value="Buscar Usuario" />
                     </form>
 
@@ -71,22 +120,18 @@ const AdminCrud = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {
-                            /* {usuarios.map((usuario) => (
+                            {Array.isArray(currUsrs) && currUsrs.map((usuario) => (
                                 <tr key={usuario.id}>
-                                    <td>{usuario.id}</td>
+                                    <td>{usuario.nombre}</td>
                                     <td>{usuario.correo}</td>
-                                    <td>{usuario.passwd}</td>
-                                    <td>{usuario.perfil}</td>
-                                    <td>{usuario.status}</td>
-                                    <td>{usuario.alta}</td>
+                                    <td>{usuario.id}</td>
                                 </tr>
-                            ))} */
-                            }
+                            ))}
                         </tbody>
                     </table>
+
                 </div>
-                            Delimiter
+                            {/* Creación de usuarios */}
                 <div className="section">
                     <h2>Agregar Usuario</h2>
                     <form onSubmit={handleInsert}>
