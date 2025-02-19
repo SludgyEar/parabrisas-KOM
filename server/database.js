@@ -64,3 +64,13 @@ export async function getUserByName(nombre){
     return rows;
     // Regresa el usuario con el nombre dado
 }
+
+export async function logicalDelete(id){
+    const [rows] = await pool.query(`
+        UPDATE USUARIOS
+        SET STATUS_USR = '2'
+        WHERE ID_USR = ?
+        `, [id]);
+    return rows;
+    // Actualiza el status de un usuario a inactivo
+}

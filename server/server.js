@@ -1,5 +1,5 @@
 import express from 'express';
-import {getUsers, getUserById, createUser, loginUser, getUserByEmail, getUserByName} from './database.js';
+import {getUsers, getUserById, createUser, loginUser, getUserByEmail, getUserByName, logicalDelete} from './database.js';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 
@@ -25,6 +25,13 @@ app.get("/usuarios", async (req, res) => {
     res.status(201).send(users); // Cambiado: Se envía la lista de usuarios
 });
 
+app.put("/delete/:id", async (req, res) => {
+    const id = req.params.id;
+    const user = await logicalDelete(id);
+    res.status(201).send(user);
+    // Eliminar usuario
+});
+
 // app.get("/usuarios", async(req, res) => {
 //     const users = await getUsers();
 //     res.status(201).send(users);
@@ -45,18 +52,11 @@ app.get("/usuarios", async (req, res) => {
 //     }
 // });
 
-// app.get("/usuarios/:nombre", async (req, res) =>{
-//     const nombre = req.params.nombre;
-//     const user = await getUserByName(nombre);
+// app.get("/valida/:correo", async (req, res) =>{
+//     const correo = req.params.correo;
+//     const user = await getUserByEmail(correo);
 //     res.status(201).send(user);
 //     // Obtener usuario por nombre
-//     if (user) {
-//         console.log('Búsqueda por NOMBRE correcta');
-
-//     } else {
-//         console.log('Búsqueda por NOMBRE incorrecta');
-
-//     }
 // });
 
 // app.get("/usuarios/:correo", async (req, res) => {

@@ -4,7 +4,7 @@ import "./adminStyle.css";
 
 const AdminCrud = () => {
     // Insert:
-    const [newUser, setNewUser] = useState({
+    const [user, SetUser] = useState({
         nombre: "",
         correo: "",
         passwd: "",
@@ -13,16 +13,18 @@ const AdminCrud = () => {
     });
 
     const handleNewUser = (e) =>{
-        setNewUser(prev => ({...prev, [e.target.name]: e.target.value}));
-        // Crea un nuevo usuario y lo inicializa con las variables ingresadas por el usr
+        SetUser(prev => ({...prev, [e.target.name]: e.target.value}));
+        // Usa la variable usuario para inicializar uno, este usuario será usado para crear uno nuevo
     };
     const handleInsert = async (e) => {
         e.preventDefault();
         try {
-            await axios.post("http://localhost:5000/register", newUser);
-            const form = e.target; 
-            form.nombre.value = form.correo.value = form.passwd.value = form.perfil.value = form.status.value = '';
-            setNewUser('');
+            const form = e.target;
+            await axios.post("http://localhost:5000/register", user);
+            form.nombre.value = form.correo.value = form.passwd.value = '';
+            form.perfil.value = "A";
+            form.status.value = "1";
+            SetUser('');
         } catch (err) {
             console.log(err);
         }
@@ -32,11 +34,12 @@ const AdminCrud = () => {
     // Search:
     
     const [filtro, setFiltro] = useState({tipo: "nombre"});
+    const handleFiltro = (e) => {
+        const tipo = e.target.name;
+        setFiltro({ tipo });
+    };
+    
     const [currUsrs, setCurrUsrs] = useState([]);   // Lista de usuarios a desplegar
-    const [valueUsr, setValueUser] = useState({
-        value: ""
-    });   // {id, nombre, correo} a buscar para generar la lista
-
     const getCurrUsrs = async () =>{
         try {
             const response = await axios.get("http://localhost:5000/usuarios");
@@ -46,26 +49,26 @@ const AdminCrud = () => {
 
     useEffect(() => {
         getCurrUsrs();
+        // Obtiene todos los usuarios al cargar la página
     }, []);
 
-    const handleFiltro = (e) => {
-        const tipo = e.target.name;
-        setFiltro({ tipo });
-    };
 
+    const [valueUsr, setValueUser] = useState({
+        value: ""
+    });   // Contiene el criterio de búsqueda para la tabla de usuarios {nombre, correo, id}
     const handleValueUser = (e) => {
         setValueUser(prev => ({...prev, [e.target.name]: e.target.value}));
-        // Obtiene el id, nombre o correo a buscar
+        // Obtiene el criterio de búsqueda para la tabla de usuarios
     };
     const handleCurrUsrs = async (e) => {
         e.preventDefault();
         try {
             let response = null;
-            if (valueUsr.value) { // Solo busca si hay un valor ingresado
+            if (valueUsr.value) {
                 response = await axios.get("http://localhost:5000/usuarios", {
                     params: { [filtro.tipo]: valueUsr.value } // Usa el tipo de filtro como clave
                 });
-                setCurrUsrs(response.data);
+                setCurrUsrs(response.data); // Actualiza la lista de usuarios
             } else {
                 await getCurrUsrs(); // Si no hay valor, obtén todos los usuarios
             }
@@ -97,11 +100,11 @@ const AdminCrud = () => {
                 <div className="section" id="insert">
                     <h2>Agregar Usuario</h2>
                     <form onSubmit={handleInsert}>
-                        <input type="text" placeholder="Nombre" name="nombre" onChange={handleNewUser} value={newUser.nombre} required />
-                        <input type="text" placeholder="Correo" name="correo" onChange={handleNewUser} value={newUser.correo} required />
-                        <input type="password" placeholder="Contraseña" name="passwd" onChange={handleNewUser} value={newUser.passwd} required />
+                        <input type="text" placeholder="Nombre" id="input-nombre" name="nombre" onChange={handleNewUser} value={user.nombre} required />
+                        <input type="text" placeholder="Correo" id="input-correo" name="correo" onChange={handleNewUser} value={user.correo} required />
+                        <input type="password" placeholder="Contraseña" name="passwd" onChange={handleNewUser} value={user.passwd} required />
                         <div className="select-container">
-                            <select name="perfil" className="select-custom" value={newUser.perfil} onChange={handleNewUser}>
+                            <select name="perfil" className="select-custom" value={user.perfil} onChange={handleNewUser}>
                                 <option value="A">A</option>
                                 <option value="B">B</option>
                                 <option value="C">C</option>
@@ -109,7 +112,7 @@ const AdminCrud = () => {
                                 <option value="E">E</option>
                             </select>
 
-                            <select name="status" className="select-custom" value={newUser.status} onChange={handleNewUser}>
+                            <select name="status" className="select-custom" value={user.status} onChange={handleNewUser}>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
                             </select>
@@ -143,6 +146,7 @@ const AdminCrud = () => {
                                     <th>Perfil</th>
                                     <th>Status</th>
                                     <th>Alta</th>
+                                    <th>Acción</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -155,6 +159,32 @@ const AdminCrud = () => {
                                         <td>{usuario.perfil_usr}</td>
                                         <td>{usuario.status_usr}</td>
                                         <td>{usuario.alta_usr}</td>
+                                        <td>
+
+                                            <button 
+                                                className="delete-edit"
+                                                id="btn-delete"
+                                                onClick={async (e) => {
+                                                    e.preventDefault();
+                                                    try{
+                                                        let idToDelete = usuario.id_usr;
+                                                        await axios.put(`http://localhost:5000/delete/${idToDelete}`);  // Así se busca un parámetro correctamente
+                                                        getCurrUsrs();
+
+                                                    }catch(err){console.log(err);}
+                                                }}
+                                                
+                                            >
+                                            Borrar
+                                            </button>
+                                            <button 
+                                                className="delete-edit"
+                                                id="btn-edit"
+                                            >
+                                                Editar
+                                            </button>
+
+                                        </td>
                                     </tr>
                                 ))}
                             </tbody>
