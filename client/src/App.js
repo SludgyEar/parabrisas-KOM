@@ -5,6 +5,7 @@ import Login from "./views/Login";
 import Register from "./views/Register";
 import DashBoard from "./views/DashBoard";
 import AdminCrud from "./views/adminCrud";
+import Test from "./views/test";
 import "./App.css";
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/dashboard" element={<DashBoard />} />
         <Route path="/adminCrud" element={<AdminCrud />} />
+        <Route path="/test" element={<Test />} />
       </Routes>
     </Router>
   );

@@ -3,6 +3,12 @@ import axios from "axios";
 import "./adminStyle.css";
 
 const AdminCrud = () => {
+    // Cambio de divs por estado
+    const [shFirst, setShFirst] = useState(true);   // En un principio se muestra add
+    const handleChange = () => {
+        setShFirst(prev => !prev);
+    };
+
     // Insert:
     const [user, SetUser] = useState({
         nombre: "",
@@ -97,30 +103,57 @@ const AdminCrud = () => {
             <div className="container" id="contenedor">
 
                 {/* Creación de usuarios */}
-                <div className="section" id="insert">
-                    <h2>Agregar Usuario</h2>
-                    <form onSubmit={handleInsert}>
-                        <input type="text" placeholder="Nombre" id="input-nombre" name="nombre" onChange={handleNewUser} value={user.nombre} required />
-                        <input type="text" placeholder="Correo" id="input-correo" name="correo" onChange={handleNewUser} value={user.correo} required />
-                        <input type="password" placeholder="Contraseña" name="passwd" onChange={handleNewUser} value={user.passwd} required />
-                        <div className="select-container">
-                            <select name="perfil" className="select-custom" value={user.perfil} onChange={handleNewUser}>
-                                <option value="A">A</option>
-                                <option value="B">B</option>
-                                <option value="C">C</option>
-                                <option value="D">D</option>
-                                <option value="E">E</option>
-                            </select>
+                {shFirst ? (
+                    <div className="section" id="insert">
+                        <h2>Agregar Usuario</h2>
+                        <form onSubmit={handleInsert}>
+                            <input type="text" placeholder="Nombre" id="input-nombre" name="nombre" onChange={handleNewUser} value={user.nombre} required />
+                            <input type="text" placeholder="Correo" id="input-correo" name="correo" onChange={handleNewUser} value={user.correo} required />
+                            <input type="password" placeholder="Contraseña" name="passwd" onChange={handleNewUser} value={user.passwd} required />
+                            <div className="select-container">
+                                <select name="perfil" className="select-custom" value={user.perfil} onChange={handleNewUser}>
+                                    <option value="A">A</option>
+                                    <option value="B">B</option>
+                                    <option value="C">C</option>
+                                    <option value="D">D</option>
+                                    <option value="E">E</option>
+                                </select>
 
-                            <select name="status" className="select-custom" value={user.status} onChange={handleNewUser}>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                            </select>
-                        </div>
+                                <select name="status" className="select-custom" value={user.status} onChange={handleNewUser}>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                </select>
+                            </div>
 
-                        <input type="submit" value="Agregar Usuario" id="insert-user" />
-                    </form>
-                </div>
+                            <input type="submit" value="Agregar Usuario" id="insert-user" />
+                        </form>
+                    </div>
+                ) : (
+                    <div className="section" id="update">
+                        <h2>Editar usuario</h2>
+                        <form onSubmit="">
+                            <input type="text" placeholder="Nombre" id="input-nombre" name="nombre" onChange="" value={user.nombre} required />
+                            <input type="text" placeholder="Correo" id="input-correo" name="correo" onChange="" value={user.correo} required />
+                            <input type="password" placeholder="Contraseña" name="passwd" onChange="" value={user.passwd} required />
+                            <div className="select-container">
+                                <select name="perfil" className="select-custom" value={user.perfil} onChange="">
+                                    <option value="A">A</option>
+                                    <option value="B">B</option>
+                                    <option value="C">C</option>
+                                    <option value="D">D</option>
+                                    <option value="E">E</option>
+                                </select>
+
+                                <select name="status" className="select-custom" value={user.status} onChange="">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                </select>
+                            </div>
+
+                            <input type="submit" value="Guardar" id="edit-user" />
+                        </form>
+                    </div>
+                )}
 
                 {/* Búsqueda de usuarios */}
 
@@ -180,6 +213,18 @@ const AdminCrud = () => {
                                             <button 
                                                 className="delete-edit"
                                                 id="btn-edit"
+                                                onClick={ async (e) =>{
+                                                    let updateUser = {
+                                                        id : usuario.id_usr,
+                                                        nombre: usuario.nombre_usr,
+                                                        correo: usuario.correo_usr,
+                                                        passwd: usuario.passwd_usr,
+                                                        perfil: usuario.perfil_usr,
+                                                        status: usuario.status_usr
+                                                    }   // Obtiene los datos del usuario del botón
+                                                    SetUser(updateUser);
+                                                    setShFirst(prev => !prev);
+                                                }}
                                             >
                                                 Editar
                                             </button>
