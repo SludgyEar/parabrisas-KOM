@@ -123,9 +123,11 @@ form {
 
 input[type="text"],
 input[type="password"],
-input[type="submit"] {
+input[type="submit"],
+input[type="reset"] {
     padding: 8px;
-    margin-bottom: 8px;
+    /* margin-bottom: 4px; */
+    margin-top: 4px;
     border: 1px solid #ccc;
     border-radius: 4px;
     width: 80%;
@@ -133,13 +135,14 @@ input[type="submit"] {
     font-size: 0.9em;
 }
 
-input[type="submit"] {
+input[type="submit"],
+input[type="reset"] {
     background-color: #444;
     color: #fff;
     cursor: pointer;
 }
 
-input[type="submit"]:hover {
+input[type="submit"], input[type="reset"]:hover {
     background-color: #555;
     box-shadow: 0 0 5px #444, 0 0 10px white, 0 0 15px #ccc, 0 0 20px #ddd;
 }

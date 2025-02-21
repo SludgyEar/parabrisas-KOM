@@ -1,5 +1,5 @@
 import express from 'express';
-import {getUsers, getUserById, createUser, loginUser, getUserByEmail, getUserByName, logicalDelete} from './database.js';
+import {getUsers, getUserById, createUser, loginUser, getUserByEmail, getUserByName, logicalDelete, updateUser, changePasswd} from './database.js';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 
@@ -32,6 +32,25 @@ app.put("/delete/:id", async (req, res) => {
     // Eliminar usuario
 });
 
+app.put("/update/:id", async (req, res) => {
+    const id = req.params.id;
+    const {nombre, correo, perfil, status} = req.body;
+    const user = await updateUser(nombre, correo, perfil, status, id);
+    if(user){
+        res.status(201);
+        console.log("Usuario actualizado")
+    }else{ res.status(401); console.log("Error al actualizar usuario");}
+    // Actualizar usuario
+});
+
+app.put("/changePasswd/:id", async (req, res) =>{
+    const id = req.params.id;
+    const {passwd} = req.body
+    console.log("Contraseña recibida: " + passwd);
+    await changePasswd(id, passwd);
+    res.status(201);
+    // Cambia la contraseña de un usuario
+});
 // app.get("/usuarios", async(req, res) => {
 //     const users = await getUsers();
 //     res.status(201).send(users);

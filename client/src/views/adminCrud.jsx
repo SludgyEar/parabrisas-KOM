@@ -4,10 +4,7 @@ import "./adminStyle.css";
 
 const AdminCrud = () => {
     // Cambio de divs por estado
-    const [shFirst, setShFirst] = useState(true);   // En un principio se muestra add
-    const handleChange = () => {
-        setShFirst(prev => !prev);
-    };
+    const [shFirst, setShFirst] = useState(true);   // En un principio se muestra el div de insert
 
     // Insert:
     const [user, SetUser] = useState({
@@ -18,7 +15,7 @@ const AdminCrud = () => {
         status: "1"
     });
 
-    const handleNewUser = (e) =>{
+    const handleUser = (e) =>{
         SetUser(prev => ({...prev, [e.target.name]: e.target.value}));
         // Usa la variable usuario para inicializar uno, este usuario será usado para crear uno nuevo
     };
@@ -30,11 +27,45 @@ const AdminCrud = () => {
             form.nombre.value = form.correo.value = form.passwd.value = '';
             form.perfil.value = "A";
             form.status.value = "1";
-            SetUser('');
+            SetUser({
+                nombre: "",
+                correo: "",
+                passwd: "",
+                perfil: "A",
+                status: "1"
+            });
+            getCurrUsrs();
         } catch (err) {
             console.log(err);
         }
         // Inserta un nuevo usuario en la base de datos
+    };
+
+    // Update:
+
+    let CURRENTPASSWORD = "";
+
+    const handleUpdate = async (e) => {
+        e.preventDefault();
+        try{
+            const form = e.target;
+            await axios.put(`http://localhost:5000/update/${user.id}`, user);
+            await axios.put(`http://localhost:5000/changePasswd/${user.id}`, user.passwd); // No funciona
+            // Cambia la contraseña si o si para corroborar
+            // if( CURRENTPASSWORD !== user.passwd ){}else{ console.log("easter egg"); }
+
+            form.nombre.value = form.correo.value = form.passwd.value = '';
+            form.perfil.value = "A";
+            form.status.value = "1";
+            SetUser({
+                nombre: "",
+                correo: "",
+                passwd: "",
+                perfil: "A",
+                status: "1"
+            });
+            getCurrUsrs();
+        }catch(err){ console.log(err); }
     };
 
     // Search:
@@ -107,11 +138,11 @@ const AdminCrud = () => {
                     <div className="section" id="insert">
                         <h2>Agregar Usuario</h2>
                         <form onSubmit={handleInsert}>
-                            <input type="text" placeholder="Nombre" id="input-nombre" name="nombre" onChange={handleNewUser} value={user.nombre} required />
-                            <input type="text" placeholder="Correo" id="input-correo" name="correo" onChange={handleNewUser} value={user.correo} required />
-                            <input type="password" placeholder="Contraseña" name="passwd" onChange={handleNewUser} value={user.passwd} required />
+                            <input type="text" placeholder="Nombre" id="input-nombre" name="nombre" onChange={handleUser} value={user.nombre} required />
+                            <input type="text" placeholder="Correo" id="input-correo" name="correo" onChange={handleUser} value={user.correo} required />
+                            <input type="password" placeholder="Contraseña" name="passwd" onChange={handleUser} value={user.passwd} required />
                             <div className="select-container">
-                                <select name="perfil" className="select-custom" value={user.perfil} onChange={handleNewUser}>
+                                <select name="perfil" className="select-custom" value={user.perfil} onChange={handleUser}>
                                     <option value="A">A</option>
                                     <option value="B">B</option>
                                     <option value="C">C</option>
@@ -119,7 +150,7 @@ const AdminCrud = () => {
                                     <option value="E">E</option>
                                 </select>
 
-                                <select name="status" className="select-custom" value={user.status} onChange={handleNewUser}>
+                                <select name="status" className="select-custom" value={user.status} onChange={handleUser}>
                                     <option value="1">1</option>
                                     <option value="2">2</option>
                                 </select>
@@ -131,12 +162,12 @@ const AdminCrud = () => {
                 ) : (
                     <div className="section" id="update">
                         <h2>Editar usuario</h2>
-                        <form onSubmit="">
-                            <input type="text" placeholder="Nombre" id="input-nombre" name="nombre" onChange="" value={user.nombre} required />
-                            <input type="text" placeholder="Correo" id="input-correo" name="correo" onChange="" value={user.correo} required />
-                            <input type="password" placeholder="Contraseña" name="passwd" onChange="" value={user.passwd} required />
+                        <form onSubmit={handleUpdate}>
+                            <input type="text" placeholder="Nombre" id="input-nombre" name="nombre" onChange={handleUser} value={user.nombre} required />
+                            <input type="text" placeholder="Correo" id="input-correo" name="correo" onChange={handleUser} value={user.correo} required />
+                            <input type="password" placeholder="Contraseña" name="passwd" onChange={handleUser} value={user.passwd} />
                             <div className="select-container">
-                                <select name="perfil" className="select-custom" value={user.perfil} onChange="">
+                                <select name="perfil" className="select-custom" value={user.perfil} onChange={handleUser}>
                                     <option value="A">A</option>
                                     <option value="B">B</option>
                                     <option value="C">C</option>
@@ -144,12 +175,11 @@ const AdminCrud = () => {
                                     <option value="E">E</option>
                                 </select>
 
-                                <select name="status" className="select-custom" value={user.status} onChange="">
+                                <select name="status" className="select-custom" value={user.status} onChange={handleUser}>
                                     <option value="1">1</option>
                                     <option value="2">2</option>
                                 </select>
                             </div>
-
                             <input type="submit" value="Guardar" id="edit-user" />
                         </form>
                     </div>
@@ -214,7 +244,7 @@ const AdminCrud = () => {
                                                 className="delete-edit"
                                                 id="btn-edit"
                                                 onClick={ async (e) =>{
-                                                    let updateUser = {
+                                                    let userToUpdate = {
                                                         id : usuario.id_usr,
                                                         nombre: usuario.nombre_usr,
                                                         correo: usuario.correo_usr,
@@ -222,10 +252,10 @@ const AdminCrud = () => {
                                                         perfil: usuario.perfil_usr,
                                                         status: usuario.status_usr
                                                     }   // Obtiene los datos del usuario del botón
-                                                    SetUser(updateUser);
+                                                    CURRENTPASSWORD = user.passwd;
+                                                    SetUser(userToUpdate);
                                                     setShFirst(prev => !prev);
-                                                }}
-                                            >
+                                                }}>
                                                 Editar
                                             </button>
 

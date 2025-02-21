@@ -74,3 +74,23 @@ export async function logicalDelete(id){
     return rows;
     // Actualiza el status de un usuario a inactivo
 }
+
+export async function updateUser(nombre, correo, perfil, status, id){   // No cambia contraseñas
+    const [rows] = await pool.query(`
+        UPDATE USUARIOS
+        SET NOMBRE_USR = ?, CORREO_USR = ?, PERFIL_USR = ?, STATUS_USR = ?
+        WHERE ID_USR = ${id}
+        `, [nombre, correo, perfil, status]);
+    return rows;
+    // Actualiza los datos de un usuario
+}
+
+export async function changePasswd(id, passwd) {
+    const [rows] = await pool.query(`
+        UPDATE USUARIOS
+        SET PASSWD_USR = ${passwd}
+        WHERE ID_USR = ${id}
+        `);
+    return rows;
+    // Cambia la contraseña de un usuario
+}
