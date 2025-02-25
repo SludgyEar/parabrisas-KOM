@@ -11,10 +11,36 @@ const pool = mysql.createPool({
 }).promise();
 
 export async function getUsers() {
-    const [rows] = await pool.query('SELECT * FROM usuarios');
+    const [rows] = await pool.query(`
+        SELECT * FROM USUARIOS
+        ORDER BY STATUS_USR ASC
+        `);
     return rows;
     // Regresa todos los usuarios
 }
+
+export async function getActiveUsers() {
+    const [rows] = await pool.query(`SELECT * FROM usuarios WHERE STATUS_USR = '1'`);
+    return rows;
+    // Regresa todos los usuarios activos
+}
+
+export async function getInactiveUsers() {
+    const [rows] = await pool.query(`SELECT * FROM usuarios WHERE STATUS_USR = '2'`);
+    return rows;
+    // Regresa todos los usuarios inactivos
+}
+
+export async function getUserPasswd(id){
+    const [rows] = await pool.query(`
+        SELECT PASSWD_USR 
+        FROM USUARIOS
+        WHERE ID_USR = ${id}
+        `);
+    return rows[0];
+    // Regresa la contraseña de un usuario dado un ID
+}
+
 export async function createUser(nombre, correo, passwd, perfil, status){
     const [result] = await pool.query(`
         INSERT INTO USUARIOS (NOMBRE_USR, CORREO_USR, PASSWD_USR, PERFIL_USR, STATUS_USR)
@@ -65,6 +91,16 @@ export async function getUserByName(nombre){
     // Regresa el usuario con el nombre dado
 }
 
+export async function getUserByPerfil(perfil){
+    const [rows] = await pool.query(`
+        SELECT *
+        FROM USUARIOS
+        WHERE PERFIL_USR = '${perfil}'
+        `);
+    return rows;
+    // Regresa todos los usuarios con el perfil dado
+}
+
 export async function logicalDelete(id){
     const [rows] = await pool.query(`
         UPDATE USUARIOS
@@ -85,12 +121,12 @@ export async function updateUser(nombre, correo, perfil, status, id){   // No ca
     // Actualiza los datos de un usuario
 }
 
-export async function changePasswd(id, passwd) {
+export async function updateUserWPasswd(nombre, correo, passwd, perfil, status, id) {
     const [rows] = await pool.query(`
         UPDATE USUARIOS
-        SET PASSWD_USR = ${passwd}
+        SET NOMBRE_USR = ?, CORREO_USR = ?, PASSWD_USR = ?, PERFIL_USR = ?, STATUS_USR = ?
         WHERE ID_USR = ${id}
-        `);
+        `, [nombre, correo, passwd, perfil, status]);
     return rows;
-    // Cambia la contraseña de un usuario
+    // Actualiza los datos de un usuario incluyendo su contraseña
 }

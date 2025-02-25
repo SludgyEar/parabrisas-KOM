@@ -9,8 +9,8 @@ function Register() {
         nombre: "",
         correo: "",
         passwd: "",
-        perfil: "",
-        status: ""
+        perfil: "A",
+        status: "1"
     });
 
     const navigate = useNavigate();

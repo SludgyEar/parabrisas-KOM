@@ -17,7 +17,7 @@ const AdminCrud = () => {
 
     const handleUser = (e) =>{
         SetUser(prev => ({...prev, [e.target.name]: e.target.value}));
-        // Usa la variable usuario para inicializar uno, este usuario será usado para crear uno nuevo
+        // Usa la variable usuario para inicializar uno, este usuario será usado para crear uno nuevo o actualizar un usuario existente
     };
     const handleInsert = async (e) => {
         e.preventDefault();
@@ -35,25 +35,16 @@ const AdminCrud = () => {
                 status: "1"
             });
             getCurrUsrs();
-        } catch (err) {
-            console.log(err);
-        }
+        } catch (err) { console.log(err); }
         // Inserta un nuevo usuario en la base de datos
     };
 
     // Update:
-
-    let CURRENTPASSWORD = "";
-
     const handleUpdate = async (e) => {
         e.preventDefault();
         try{
             const form = e.target;
-            await axios.put(`http://localhost:5000/update/${user.id}`, user);
-            await axios.put(`http://localhost:5000/changePasswd/${user.id}`, user.passwd); // No funciona
-            // Cambia la contraseña si o si para corroborar
-            // if( CURRENTPASSWORD !== user.passwd ){}else{ console.log("easter egg"); }
-
+            const usuario = user;
             form.nombre.value = form.correo.value = form.passwd.value = '';
             form.perfil.value = "A";
             form.status.value = "1";
@@ -64,7 +55,9 @@ const AdminCrud = () => {
                 perfil: "A",
                 status: "1"
             });
+            await axios.put(`http://localhost:5000/update/${usuario.id}`, usuario);
             getCurrUsrs();
+
         }catch(err){ console.log(err); }
     };
 
@@ -79,7 +72,7 @@ const AdminCrud = () => {
     const [currUsrs, setCurrUsrs] = useState([]);   // Lista de usuarios a desplegar
     const getCurrUsrs = async () =>{
         try {
-            const response = await axios.get("http://localhost:5000/usuarios");
+            const response = await axios.get("http://localhost:5000/usuarios"); // Se cambio la ruta de la petición de usuarios activos a todos los usuarios
             setCurrUsrs(response.data);
         } catch (err) { console.log(err); }
     };
@@ -134,13 +127,13 @@ const AdminCrud = () => {
             <div className="container" id="contenedor">
 
                 {/* Creación de usuarios */}
-                {shFirst ? (
+                {(shFirst) ? (
                     <div className="section" id="insert">
                         <h2>Agregar Usuario</h2>
                         <form onSubmit={handleInsert}>
-                            <input type="text" placeholder="Nombre" id="input-nombre" name="nombre" onChange={handleUser} value={user.nombre} required />
-                            <input type="text" placeholder="Correo" id="input-correo" name="correo" onChange={handleUser} value={user.correo} required />
-                            <input type="password" placeholder="Contraseña" name="passwd" onChange={handleUser} value={user.passwd} required />
+                            <input type="text" placeholder="Nombre" id="input-nombre" name="nombre" onChange={handleUser} required />
+                            <input type="text" placeholder="Correo" id="input-correo" name="correo" onChange={handleUser} required />
+                            <input type="password" placeholder="Contraseña" name="passwd" onChange={handleUser} required />
                             <div className="select-container">
                                 <select name="perfil" className="select-custom" value={user.perfil} onChange={handleUser}>
                                     <option value="A">A</option>
@@ -163,9 +156,9 @@ const AdminCrud = () => {
                     <div className="section" id="update">
                         <h2>Editar usuario</h2>
                         <form onSubmit={handleUpdate}>
-                            <input type="text" placeholder="Nombre" id="input-nombre" name="nombre" onChange={handleUser} value={user.nombre} required />
-                            <input type="text" placeholder="Correo" id="input-correo" name="correo" onChange={handleUser} value={user.correo} required />
-                            <input type="password" placeholder="Contraseña" name="passwd" onChange={handleUser} value={user.passwd} />
+                            <input type="text" placeholder="Nombre" id="input-edit-name" name="nombre" onChange={handleUser} value={user.nombre} required />
+                            <input type="text" placeholder="Correo" id="input-edit-correo" name="correo" onChange={handleUser} value={user.correo} required />
+                            <input type="password" placeholder="Contraseña" name="passwd" onChange={handleUser} />
                             <div className="select-container">
                                 <select name="perfil" className="select-custom" value={user.perfil} onChange={handleUser}>
                                     <option value="A">A</option>
@@ -183,7 +176,8 @@ const AdminCrud = () => {
                             <input type="submit" value="Guardar" id="edit-user" />
                         </form>
                     </div>
-                )}
+                    )
+                }
 
                 {/* Búsqueda de usuarios */}
 
@@ -192,6 +186,8 @@ const AdminCrud = () => {
                     <button className="filtro-select" onClick={handleFiltro} name="id">ID</button>
                     <button className="filtro-select" onClick={handleFiltro} name="nombre">Nombre</button>
                     <button className="filtro-select" onClick={handleFiltro} name="correo">Correo</button>
+                    <button className="filtro-select" onClick={handleFiltro} name="status">Status</button>
+                    <button className="filtro-select" onClick={handleFiltro} name="perfil">Perfil</button>
                     <form onSubmit={handleCurrUsrs}>
                         <input type="text" placeholder={`Buscar por ${filtro.tipo}`} name="value" id="input-search" onChange={handleValueUser}  />
                         <input type="submit" value="Buscar Usuario" id="buscar-usuario" />
@@ -252,7 +248,6 @@ const AdminCrud = () => {
                                                         perfil: usuario.perfil_usr,
                                                         status: usuario.status_usr
                                                     }   // Obtiene los datos del usuario del botón
-                                                    CURRENTPASSWORD = user.passwd;
                                                     SetUser(userToUpdate);
                                                     setShFirst(prev => !prev);
                                                 }}>

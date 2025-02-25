@@ -1,7 +1,9 @@
 import express from 'express';
-import {getUsers, getUserById, createUser, loginUser, getUserByEmail, getUserByName, logicalDelete, updateUser, changePasswd} from './database.js';
+import { getUsers, getUserById, createUser, loginUser, getUserByEmail, getUserByName, logicalDelete,
+        updateUser, updateUserWPasswd, getActiveUsers, getInactiveUsers, getUserPasswd, getUserByPerfil } from './database.js';
 import cors from 'cors';
 import bodyParser from 'body-parser';
+import CryptoJS from "crypto-js";
 
 const app = express();
 app.use(bodyParser.json());
@@ -9,7 +11,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(cors());
 
 app.get("/usuarios", async (req, res) => {
-    const { id, nombre, correo } = req.query; // Cambiado: Ahora se obtienen los parámetros de consulta
+    const { id, nombre, correo, status, perfil } = req.query; // Cambiado: Ahora se obtienen los parámetros de consulta
     let users = [];
 
     if (id) {
@@ -18,11 +20,25 @@ app.get("/usuarios", async (req, res) => {
         users = await getUserByName(nombre);
     } else if (correo) {
         users = await getUserByEmail(correo);
-    } else {
-        users = await getUsers(); // Si no hay parámetros, obtén todos los usuarios
-    }
+    } else if (status){
+        if(status == '1' || status == 1){
+            users = await getActiveUsers();
+            console.log("Usuarios activos");
+        }else{
+            users = await getInactiveUsers() // Usuarios activos e inactivos
+            console.log("Usuarios inactivos");
+        }
+    } else if(perfil){
+        users = await getUserByPerfil(perfil);
+    }else { users = await getUsers(); } // Si no hay parámetros, obtén todos los usuarios 
 
     res.status(201).send(users); // Cambiado: Se envía la lista de usuarios
+});
+
+app.get("/usuariosActivos", async (req, res) => {
+    const users = await getActiveUsers();
+    res.status(201).send(users);
+    // Obtener todos los usuarios activos
 });
 
 app.put("/delete/:id", async (req, res) => {
@@ -34,8 +50,15 @@ app.put("/delete/:id", async (req, res) => {
 
 app.put("/update/:id", async (req, res) => {
     const id = req.params.id;
-    const {nombre, correo, perfil, status} = req.body;
-    const user = await updateUser(nombre, correo, perfil, status, id);
+    const {nombre, correo, passwd,  perfil, status} = req.body;
+    let user;
+    let passwdQuery = await getUserPasswd(id);
+    if (passwdQuery.PASSWD_USR != passwd) {          // Hacer un query para obtener la contraseña del usuario a modificar y aquí comparar si se ha modificado
+        user = await updateUserWPasswd(nombre, correo, CryptoJS.SHA256(passwd).toString(), perfil, status, id);
+        console.log("Contraseña diferente!!!");
+        console.log(`Contraseña en la BD: ${passwdQuery} Contraseña en el body: ${passwd}`);
+    } else { user = await updateUser(nombre, correo, perfil, status, id); console.log("Contraseña igual"); }
+    
     if(user){
         res.status(201);
         console.log("Usuario actualizado")
@@ -43,59 +66,23 @@ app.put("/update/:id", async (req, res) => {
     // Actualizar usuario
 });
 
-app.put("/changePasswd/:id", async (req, res) =>{
+app.put("/changePasswd/:id/:passwd", async (req, res) => {
     const id = req.params.id;
-    const {passwd} = req.body
-    console.log("Contraseña recibida: " + passwd);
-    await changePasswd(id, passwd);
-    res.status(201);
+    const passwd = req.params.passwd
+    const user = await changePasswd(id, passwd);
+    if(user){
+        res.status(201).send(user);
+        console.log("Contraseña cambiada exitosamente");
+    }else { res.status(401).send('Error al cambiar contraseña'); }
     // Cambia la contraseña de un usuario
 });
-// app.get("/usuarios", async(req, res) => {
-//     const users = await getUsers();
-//     res.status(201).send(users);
-//     // Obtener todos los usuarios
-// });
 
-// app.get("/usuarios/:id", async (req, res) => {
-//     const id = req.params.id;
-//     const user = await getUserById(id);
-//     res.status(201).send(user);
-//     // Obtener usuario por id
-//     if (user) {
-//         console.log('Búsqueda por ID correcta');
-
-//     } else {
-//         console.log('Búsqueda por ID incorrecta');
-
-//     }
-// });
-
-// app.get("/valida/:correo", async (req, res) =>{
-//     const correo = req.params.correo;
-//     const user = await getUserByEmail(correo);
-//     res.status(201).send(user);
-//     // Obtener usuario por nombre
-// });
-
-// app.get("/usuarios/:correo", async (req, res) => {
-//     const correo = req.params.correo;
-//     const user = await getUserByEmail(correo);
-//     res.status(201).send(user);
-//     // Obtener usuario por correo
-//     if (user) {
-//         console.log('Búsqueda por CORREO correcta');
-
-//     } else {
-//         console.log('Búsqueda por CORREO incorrecta');
-
-//     }
-// });
 
 app.post("/register", async (req, res) => {
     const {nombre, correo, passwd, perfil, status} = req.body;
     const user = await createUser(nombre, correo, passwd, perfil, status);
     res.status(201).send(user);
+    console.log("Usuario registrado exitosamente");
     // Crear usuario
 });
 
