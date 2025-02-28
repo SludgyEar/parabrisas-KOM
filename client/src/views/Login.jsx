@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./loginStyle.css"; // Asegúrate de tener el archivo CSS en la misma carpeta
+import "./styles/loginStyle.css"; // Asegúrate de tener el archivo CSS en la misma carpeta
 import { useNavigate, Link } from "react-router-dom";
 import CryptoJS from "crypto-js";
 import axios from "axios";

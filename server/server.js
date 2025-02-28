@@ -1,6 +1,7 @@
 import express from 'express';
 import { getUsers, getUserById, createUser, loginUser, getUserByEmail, getUserByName, logicalDelete,
-        updateUser, updateUserWPasswd, getActiveUsers, getInactiveUsers, getUserPasswd, getUserByPerfil } from './database.js';
+        updateUser, updateUserWPasswd, getActiveUsers, getInactiveUsers, getUserPasswd, getUserByPerfil, 
+    getPbs, getAllPbs } from './database.js';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import CryptoJS from "crypto-js";
@@ -77,7 +78,6 @@ app.put("/changePasswd/:id/:passwd", async (req, res) => {
     // Cambia la contraseña de un usuario
 });
 
-
 app.post("/register", async (req, res) => {
     const {nombre, correo, passwd, perfil, status} = req.body;
     const user = await createUser(nombre, correo, passwd, perfil, status);
@@ -110,4 +110,15 @@ app.use((err, req, res, next) => {
 
 app.listen(5000, ()=>{
     console.log('Server started on port 5000');
+});
+
+/*
+   ********************************************
+                Catalogode Pbs!
+   ********************************************
+*/
+
+app.get("/parabrisas", async (req, res) => {
+    const pbs = await getAllPbs();
+    res.status(200).send(pbs);
 });

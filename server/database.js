@@ -130,3 +130,26 @@ export async function updateUserWPasswd(nombre, correo, passwd, perfil, status, 
     return rows;
     // Actualiza los datos de un usuario incluyendo su contraseña
 }
+
+/*
+   ********************************************
+                Catalogode Pbs!
+   ********************************************
+*/
+
+export async function getPbs(){
+    const [rows] = await pool.query(`
+        SELECT MARCA_PBS, CLAVE_PBS, PRECIO_PBS, STOCK_PBS, ESTADO_PBS
+        FROM PARABRISAS
+        `);
+    return rows;
+    // Regresa Clave, Marca, Precio y Stock y Estado de todos los parabrisas
+}
+
+export async function getAllPbs() {
+    const [rows] = await pool.query(`
+        SELECT *
+        FROM PARABRISAS
+        `);
+    return rows;
+}

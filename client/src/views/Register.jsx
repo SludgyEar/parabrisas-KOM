@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
-import "./registerStyle.css"; // Asegúrate de importar tu CSS
+import "./styles/registerStyle.css"; // Asegúrate de importar tu CSS
 
 function Register() {
 
