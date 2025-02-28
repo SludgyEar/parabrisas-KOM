@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "../../styles/userDashBoard.css"; // Importa el archivo CSS
+import Catalogo from "../../services/Catalogo.jsx"; // Importa el componente Catálogo
 
 const Dashboard = () => {
     const [selectedService, setSelectedService] = useState("catálogo"); // Estado para el servicio seleccionado
@@ -53,7 +54,8 @@ const Dashboard = () => {
                 <main className="content">
                     {selectedService === "catálogo" && 
                     <div>
-                        Contenido del Catálogo
+                        <h1>Parabrisas disponibles !</h1>
+                        <Catalogo/>
                     </div>}
                     {selectedService === "perfil" &&
                     <div>

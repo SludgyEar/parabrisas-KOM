@@ -4,7 +4,9 @@
     justify-content: center;
     gap: 70px;
     padding: 20px;
-    background-color: aqua;
+    background-color: #f0f0f0;
+    border-radius: 15px;
+    flex: 0 0 auto;
 }
 
 .card {
@@ -18,6 +20,7 @@
     flex-direction: column;
     justify-content: space-between;
     text-align: center;
+    flex: 0 0 auto;
 }
 
 .title {
@@ -27,4 +30,89 @@
 
 .info {
     font-size: 16px;
+}
+
+/* Modificación: Se cambia el contenedor de navegación para que los elementos se organicen en dos filas.
+   El formulario ocupará la fila completa y los botones quedarán en la siguiente. */
+.navegationContainer {
+    display: flex;
+    flex-wrap: wrap;
+    /* Permite que los hijos se ubiquen en distintas líneas */
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+    gap: 10px;
+    /* Espacio entre elementos */
+}
+
+/* Modificación: El formulario ocupa toda la fila para aparecer arriba de los botones */
+.navegationContainer form {
+    flex-basis: 100%;
+    /* Hace que el formulario ocupe el 100% del ancho disponible */
+    display: flex;
+    /* Permite alinear el input y el botón de búsqueda en línea */
+    justify-content: center;
+    gap: 5px;
+    /* Espacio entre el input y el botón */
+}
+
+.navegation {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.navegation:disabled {
+    background-color: #9E9E9E;
+    cursor: not-allowed;
+}
+
+.navegation:hover:not(:disabled) {
+    background-color: hwb(168 16% 42%);
+}
+
+#export-btn {
+    background-color: #3db29a;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+/* Notar que la clase .searchForm se ignora, ya que usamos el form dentro de .navegationContainer */
+
+/* Estilo del input de búsqueda */
+/* Modificación: Se aumenta el ancho del input */
+.searchInput {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px 0 0 5px;
+    outline: none;
+    width: 300px;
+    /* Nuevo ancho para el input */
+}
+
+/* Estilo del botón de submit */
+.searchSubmit {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #4c6daf;
+    color: white;
+    border: 1px solid #233b6b;
+    border-radius: 5px 5px 5px 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.searchSubmit:hover {
+    background-color: #45a049;
 }
