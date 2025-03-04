@@ -137,19 +137,82 @@ export async function updateUserWPasswd(nombre, correo, passwd, perfil, status, 
    ********************************************
 */
 
-export async function getPbs(){
-    const [rows] = await pool.query(`
-        SELECT MARCA_PBS, CLAVE_PBS, PRECIO_PBS, STOCK_PBS, ESTADO_PBS
-        FROM PARABRISAS
-        `);
-    return rows;
-    // Regresa Clave, Marca, Precio y Stock y Estado de todos los parabrisas
-}
-
 export async function getAllPbs() {
     const [rows] = await pool.query(`
         SELECT *
         FROM PARABRISAS
         `);
     return rows;
+}
+// Clave, marca y edo
+
+export async function getPbsByMark(marca) {
+    const [rows] = await pool.query(`
+        SELECT *
+        FROM PARABRISAS
+        WHERE MARCA_PBS = '${marca}'
+        `);   
+    return rows;
+    // Regresa un pbs dada una marca de vehículo
+}
+
+export async function getPbsByKey(clave) {
+    const [rows] = await pool.query(`
+        SELECT *
+        FROM PARABRISAS
+        WHERE CLAVE_PBS = '${clave}'
+        `);
+    return rows;
+    // Regresa un pbs dada una clave de pbs
+}
+
+export async function getPbsKeyByKey(clave) {
+    const [rows] = await pool.query(`
+        SELECT CLAVE_PBS
+        FROM PARABRISAS
+        WHERE CLAVE_PBS = '${clave}'
+        `);
+    return rows[0];
+    // Regresa un pbs dada una clave de pbs
+}
+
+export async function getPbsByState(edo) {
+    const [rows] = await pool.query(`
+        SELECT *
+        FROM PARABRISAS
+        WHERE ESTADO_PBS = '${edo}'
+        `);
+    return rows;
+    // Regresa pbs dado un estado 'disponible' o 'agotado'
+}
+
+export async function createPbs(clave, marca, precio, stock) {
+    await pool.query(
+        `INSERT INTO PARABRISAS(CLAVE_PBS, MARCA_PBS, PRECIO_PBS, STOCK_PBS)
+        VALUES (?,?,?,?)`, [clave, marca, precio, stock]);
+    // Función que agrega pbs nuevos
+}
+
+export async function updatePbsStock(clave, precio, stock) {
+    await pool.query(
+        `UPDATE PARABRISAS
+        SET STOCK_PBS = STOCK_PBS + ${stock}
+        SET PRECIO_PBS = ${precio}
+        WHERE CLAVE_PBS = ${clave}
+        `);
+    // Función que actualiza el stock de los pbs después de recibir un pedido
+}
+
+export async function decreaseStock(salidas) {
+    await pool.query(
+        `UPDATE PARABRISAS
+        SET STOCK_PBS = STOCK_PBS - ?`, [salidas]);
+    // Función que disminuye el stock de pbs
+}
+
+export async function increaseStock(entradas) {
+    await pool.query(
+        `UPDATE PARABRISAS
+        SET STOCK_PBS = STOCK_PBS + ?`, [entradas]);
+    // Función que aumenta el stock de pbs
 }

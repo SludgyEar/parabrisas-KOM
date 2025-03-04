@@ -1,8 +1,10 @@
-import React, { useState } from "react";
-import "../../styles/userDashBoard.css"; // Importa el archivo CSS
-import Catalogo from "../../services/Catalogo.jsx"; // Importa el componente Catálogo
+import React, { useState } from 'react';
+import "../styles/adminDashBoard.css"; // Importa el archivo CSS
+import Catalogo from "../services/Catalogo";
+import ImportarPortal from '../services/ImportarPortal';
 
-const Dashboard = () => {
+
+function AdminDashBoard(){
     const [selectedService, setSelectedService] = useState("catálogo"); // Estado para el servicio seleccionado
 
     // Función para cambiar el servicio seleccionado
@@ -16,14 +18,14 @@ const Dashboard = () => {
             <header className="header">
                 <h1>Parabrisas Kom</h1>
                 <div className="userMenu">
-                    <span>Usuario</span>
+                    <span>Administrador!</span>
                     <div className="userDropdown">
                         <button>Perfil</button>
                         <button>Cerrar sesión</button>
                     </div>
                 </div>
             </header>
-            <div className="mainContainer">
+            <div className="mainContainer" id='mainContainer'>
                 <aside className="sidebar">
                     <button
                         className={selectedService === "catálogo" ? "active" : ""}
@@ -51,24 +53,25 @@ const Dashboard = () => {
                     </button>
                 </aside>
 
-                <main className="content">
-                    {selectedService === "catálogo" && 
-                    <div>
-                        <h1>Parabrisas disponibles !</h1>
-                        <Catalogo/>
-                    </div>}
+                <main className="content" id='content'>
+                    {selectedService === "catálogo" &&
+                        <div id='catalogo-container'>
+                            <h1>Parabrisas disponibles !</h1>
+                            <Catalogo />
+                            
+                        </div>}
                     {selectedService === "perfil" &&
-                    <div>
-                        Contenido del Perfil
-                    </div>}
+                        <div>
+                            Contenido del Perfil
+                        </div>}
                     {selectedService === "facturas" &&
-                    <div>
-                        Contenido de Facturas
-                    </div>}
+                        <div>
+                            Contenido de Facturas
+                        </div>}
                     {selectedService === "citas" &&
-                    <div>
-                        Contenido de Citas
-                    </div>}
+                        <div>
+                            Contenido de Citas
+                        </div>}
                 </main>
             </div>
 
@@ -79,6 +82,6 @@ const Dashboard = () => {
             </footer>
         </div>
     );
-};
+}
 
-export default Dashboard;
+export default AdminDashBoard;

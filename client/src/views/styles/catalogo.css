@@ -37,23 +37,17 @@
 .navegationContainer {
     display: flex;
     flex-wrap: wrap;
-    /* Permite que los hijos se ubiquen en distintas líneas */
     justify-content: center;
     align-items: center;
     margin: 20px 0;
     gap: 10px;
-    /* Espacio entre elementos */
 }
 
-/* Modificación: El formulario ocupa toda la fila para aparecer arriba de los botones */
 .navegationContainer form {
     flex-basis: 100%;
-    /* Hace que el formulario ocupe el 100% del ancho disponible */
     display: flex;
-    /* Permite alinear el input y el botón de búsqueda en línea */
     justify-content: center;
     gap: 5px;
-    /* Espacio entre el input y el botón */
 }
 
 .navegation {
@@ -88,9 +82,6 @@
 }
 
 /* Notar que la clase .searchForm se ignora, ya que usamos el form dentro de .navegationContainer */
-
-/* Estilo del input de búsqueda */
-/* Modificación: Se aumenta el ancho del input */
 .searchInput {
     padding: 10px;
     font-size: 16px;
@@ -98,10 +89,8 @@
     border-radius: 5px 0 0 5px;
     outline: none;
     width: 300px;
-    /* Nuevo ancho para el input */
 }
 
-/* Estilo del botón de submit */
 .searchSubmit {
     padding: 10px 20px;
     font-size: 16px;
@@ -115,4 +104,23 @@
 
 .searchSubmit:hover {
     background-color: #45a049;
+}
+
+/*
+    Filtrado
+*/
+.filtro-select {
+    font-size: 12px;
+    padding: 5px 10px;
+    background-color: #07878b;
+    color: #fff;
+    cursor: pointer;
+    margin-bottom: 10px;
+    border: 1px solid #233b6b;
+    border-radius: 4px;
+    align-self: center;
+}
+
+.filtro-select:hover {
+    box-shadow: 0 0 5px #444, 0 0 10px white, 0 0 15px #ccc, 0 0 20px #ddd;
 }

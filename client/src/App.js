@@ -6,11 +6,13 @@ import Login from "./views/Login";
 import Register from "./views/Register";
 import AdminCrud from "./views/adminCrud";
 import Test from "./views/test";
-import UserDashBoard from "./views/profiles/user/UserDashBoard";
 import Perfil from "./views/services/Perfil";
 import Catalogo from "./views/services/Catalogo";
 import Facturas from "./views/services/Facturas";
 import Citas from "./views/services/Citas";
+
+import AdminDashboard from "./views/profiles/AdminDashBoard";
+import UserDashboard from "./views/profiles/UserDashBoard";
 
 function App() {
   return (
@@ -21,11 +23,12 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/adminCrud" element={<AdminCrud />} />
         {/* Servicios de usuario: currently testing: */}
-        <Route path="/userDashboard" element={<UserDashBoard />} />
+        <Route path="/userDashboard" element={<UserDashboard />} />
         <Route path="/perfil" element={<Perfil />} />
         <Route path="/catalogo" element={<Catalogo/>}/>
         <Route path="/facturas" element={<Facturas/>}/>
         <Route path="/citas" element={<Citas/>} />
+        <Route path="/adminDashboard" element={<AdminDashboard/>}/>
       </Routes>
     </Router>
   );

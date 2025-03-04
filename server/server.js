@@ -1,10 +1,14 @@
 import express from 'express';
 import { getUsers, getUserById, createUser, loginUser, getUserByEmail, getUserByName, logicalDelete,
         updateUser, updateUserWPasswd, getActiveUsers, getInactiveUsers, getUserPasswd, getUserByPerfil, 
-    getPbs, getAllPbs } from './database.js';
+        getAllPbs, getPbsByMark, getPbsByKey, getPbsByState, updatePbsStock, getPbsKeyByKey, createPbs } from './database.js';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import CryptoJS from "crypto-js";
+import multer from 'multer';
+import Papa from 'papaparse';
+import Xlsx from 'xlsx';
+
 
 const app = express();
 app.use(bodyParser.json());
@@ -114,11 +118,89 @@ app.listen(5000, ()=>{
 
 /*
    ********************************************
-                Catalogode Pbs!
+                Catalogo de Pbs!
    ********************************************
 */
 
 app.get("/parabrisas", async (req, res) => {
-    const pbs = await getAllPbs();
+    const {marca, clave, estado} = req.query;
+    let pbs = [];
+    if(marca){
+        pbs = await getPbsByMark(marca);
+        console.log(`marca ${marca}`);
+    }else if(clave){
+        pbs = await getPbsByKey(clave);
+        console.log(`clave ${clave}`);
+    }else if(estado){
+        pbs = await getPbsByState(estado);
+        console.log(`estado ${estado}`);
+    }else {
+        pbs = await getAllPbs();
+    }
     res.status(200).send(pbs);
+});
+
+// app.post("/importarPbs", async (req, res) => {
+//    const pbs = req.body;
+//    try{
+//     for(const windShield of pbs){
+//         const {clave_pbs, marca_pbs, precio_pbs, stock_pbs} = windShield;
+//         const existingPbs = await getPbsKeyByKey(clave_pbs);
+
+//         if(existingPbs == clave_pbs){
+//             await updatePbsStock(clave_pbs, precio_pbs, stock_pbs);
+//             console.log("Actualizado");
+//         }else {
+//             await createPbs(clave_pbs, marca_pbs, precio_pbs, stock_pbs);
+//             console.log("Agregado");
+//         }
+//     }
+//     res.status(200).send('Catálogo actualizado');
+
+//    }catch(error){ res.status(500).send("Error en el servidor...") } 
+// });
+
+//uploadFileHandler:
+const upload = multer({ storage: multer.memoryStorage() });
+
+app.post("/upload" , upload.single('archivo'), async (req, res) => {
+    const file = req.file;
+    if(!file){
+        return res.status(400).send('Por favor selecciona un archivo');
+    }
+
+    const ext = file.originalname.split('.').pop().toLowerCase();
+    let data = [];
+
+    try{
+        if(ext === 'csv'){
+            // Almacenar el contenido del csv en una variable
+            const csvString = file.buffer.toString('utf-8');
+            data = Papa.parse(csvString, {header: true}).data;  // Se asigna un arreglo de objetos
+        }else if(ext === 'xlsx' || ext === 'xls'){
+            // Almacenar el contenido del excel en una variable
+            const workBook = Xlsx.read(file.buffer, {type: 'buffer'});
+            const sheetName = workBook.SheetNames[0];
+            data = Xlsx.utils.sheet_to_json(workBook.Sheets[sheetName]);
+        } else{
+            return res.status(400).send('Por favor selecciona un archivo CSV o Excel (.xlsx, .xls)');
+        }
+
+        // console.log(data);
+
+        // Data ya está descompuesto en un dicc
+        for(const pbs of data){
+            const {clave_pbs, marca_pbs, precio_pbs, stock_pbs} = pbs;
+            const existingPbs = await getPbsKeyByKey(clave_pbs);
+
+            if(existingPbs == clave_pbs){
+                await updatePbsStock(clave_pbs, precio_pbs, stock_pbs);
+                console.log("Actualizado");
+            }else {
+                await createPbs(clave_pbs, marca_pbs, precio_pbs, stock_pbs);
+                console.log("Agregado");
+            }
+        }
+
+    } catch ( error ){ console.log(error); }
 });

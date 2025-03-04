@@ -31,7 +31,7 @@ function App() {
         try {
             const res = await axios.post("http://localhost:5000/login", { correo: email, passwd: encryptedPasswd });
             if (res.status === 201) {
-                navigate("/dashboard");
+                navigate("/userDashBoard");
             }
         } catch (err) {console.log(err);}
     };
