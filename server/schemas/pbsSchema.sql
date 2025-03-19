@@ -31,3 +31,12 @@ END;
 DELIMITER ;
 
 SELECT * FROM PARABRISAS;
+SELECT clave_pbs, COUNT(*) as total
+FROM parabrisas
+GROUP BY clave_pbs
+HAVING COUNT(*) > 1;
+
+DELETE FROM PARABRISAS WHERE 1=1;
+
+insert into PARABRISAS (clave_pbs, marca_pbs, precio_pbs, stock_pbs) values ('FW00399GUY', 'TOYOTA', 2214, 13);
+insert into PARABRISAS (clave_pbs, marca_pbs, precio_pbs, stock_pbs) values ('FW00212EGF', 'MAZDA', 1975, 13);

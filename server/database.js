@@ -62,7 +62,7 @@ export async function getUserById(id) {
 
 export async function loginUser(correo, passwd){
     const [rows] = await pool.query(`
-        SELECT NOMBRE_USR
+        SELECT NOMBRE_USR, CORREO_USR, STATUS_USR, PERFIL_USR
         FROM USUARIOS
         WHERE CORREO_USR = ?
         AND PASSWD_USR = ?
@@ -216,3 +216,8 @@ export async function increaseStock(entradas) {
         SET STOCK_PBS = STOCK_PBS + ?`, [entradas]);
     // Función que aumenta el stock de pbs
 }
+
+try{
+    const res = await getPbsByKey('FW51532SUV');
+    console.log(res);
+}catch(err){console.log(err);}

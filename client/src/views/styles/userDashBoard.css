@@ -8,8 +8,10 @@
 
 /* Barra superior */
 .header {
-    background-color: #333;
-    color: white;
+    background-color: #1C1C1C;
+    /* Negro metálico */
+    color: #F4F4F4;
+    /* Blanco perla */
     padding: 20px;
     display: flex;
     justify-content: space-between;
@@ -24,7 +26,8 @@
     display: none;
     position: absolute;
     right: 0;
-    background-color: #444;
+    background-color: #C0C0C0;
+    /* Plata */
     padding: 10px;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -40,26 +43,30 @@
     padding: 10px;
     background: none;
     border: none;
-    color: white;
+    color: #1C1C1C;
+    /* Negro metálico */
     text-align: left;
     cursor: pointer;
 }
 
 .userDropdown button:hover {
-    background-color: #555;
+    background-color: #007BFF;
+    /* Azul eléctrico */
 }
 
 /* Contenedor principal */
 .mainContainer {
     display: flex;
     flex: 1;
-    background-color: #f4f4f4;
+    background-color: #F4F4F4;
+    /* Blanco perla */
 }
 
 /* Menú lateral */
 .sidebar {
     width: 250px;
-    background-color: #444;
+    background-color: #C0C0C0;
+    /* Plata */
     padding: 20px;
     display: flex;
     flex-direction: column;
@@ -67,8 +74,10 @@
 }
 
 .sidebar button {
-    background-color: #555;
-    color: white;
+    background-color: #1C1C1C;
+    /* Negro metálico */
+    color: #F4F4F4;
+    /* Blanco perla */
     border: none;
     padding: 15px;
     text-align: left;
@@ -79,19 +88,21 @@
 }
 
 .sidebar button:hover {
-    background-color: #666;
+    background-color: #007BFF;
+    /* Azul eléctrico */
 }
 
 .sidebar button.active {
-    background-color: #007bff;
-    /* Color azul para el botón activo */
+    background-color: #FF5733;
+    /* Rojo deportivo */
 }
 
 /* Área de contenido */
 .content {
     flex: 1;
     padding: 20px;
-    background-color: white;
+    background-color: #F4F4F4;
+    /* Blanco perla */
     border-radius: 8px;
     margin: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -99,8 +110,10 @@
 
 /* Pie de página */
 .footer {
-    background-color: #333;
-    color: white;
+    background-color: #1C1C1C;
+    /* Negro metálico */
+    color: #F4F4F4;
+    /* Blanco perla */
     text-align: center;
     padding: 10px;
     font-size: 14px;

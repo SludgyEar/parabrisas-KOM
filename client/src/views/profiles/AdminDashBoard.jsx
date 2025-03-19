@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { use, useState } from 'react';
 import "../styles/adminDashBoard.css"; // Importa el archivo CSS
 import Catalogo from "../services/Catalogo";
-import ImportarPortal from '../services/ImportarPortal';
+import { useAuth } from "../providers/UserProvider";
 
 
 function AdminDashBoard(){
     const [selectedService, setSelectedService] = useState("catálogo"); // Estado para el servicio seleccionado
+    const user = useAuth(); // Hook para obtener el usuario autenticado
 
     // Función para cambiar el servicio seleccionado
     const handleServiceClick = (service) => {
@@ -18,7 +19,7 @@ function AdminDashBoard(){
             <header className="header">
                 <h1>Parabrisas Kom</h1>
                 <div className="userMenu">
-                    <span>Administrador!</span>
+                    <span>Administrador {user.user.NOMBRE_USR}!</span>
                     <div className="userDropdown">
                         <button>Perfil</button>
                         <button>Cerrar sesión</button>
@@ -55,10 +56,9 @@ function AdminDashBoard(){
 
                 <main className="content" id='content'>
                     {selectedService === "catálogo" &&
-                        <div id='catalogo-container'>
+                        <div className='catalogo'>
                             <h1>Parabrisas disponibles !</h1>
                             <Catalogo />
-                            
                         </div>}
                     {selectedService === "perfil" &&
                         <div>

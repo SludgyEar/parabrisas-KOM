@@ -6,7 +6,7 @@ import autoTable from 'jspdf-autotable';
 
 import ImportarPortal from './ImportarPortal';
 
-const Catalogo = ( {children} ) => {
+const Catalogo = () => {
     
     const  [pbs, setPbs] = useState([]);
 

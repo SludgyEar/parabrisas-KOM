@@ -96,7 +96,7 @@ app.post("/login", async (req, res) => {
         const user = await loginUser(correo, passwd);
         if (user){
             res.status(201).send(user);
-            console.log('Usuario autenticado');
+            console.log(`Usuario ${user.NOMBRE_USR} autenticado`);
             
         } else {
             res.status(401).send('Usuario o contraseña incorrectos');
@@ -140,26 +140,6 @@ app.get("/parabrisas", async (req, res) => {
     res.status(200).send(pbs);
 });
 
-// app.post("/importarPbs", async (req, res) => {
-//    const pbs = req.body;
-//    try{
-//     for(const windShield of pbs){
-//         const {clave_pbs, marca_pbs, precio_pbs, stock_pbs} = windShield;
-//         const existingPbs = await getPbsKeyByKey(clave_pbs);
-
-//         if(existingPbs == clave_pbs){
-//             await updatePbsStock(clave_pbs, precio_pbs, stock_pbs);
-//             console.log("Actualizado");
-//         }else {
-//             await createPbs(clave_pbs, marca_pbs, precio_pbs, stock_pbs);
-//             console.log("Agregado");
-//         }
-//     }
-//     res.status(200).send('Catálogo actualizado');
-
-//    }catch(error){ res.status(500).send("Error en el servidor...") } 
-// });
-
 //uploadFileHandler:
 const upload = multer({ storage: multer.memoryStorage() });
 
@@ -193,12 +173,11 @@ app.post("/upload" , upload.single('archivo'), async (req, res) => {
             const {clave_pbs, marca_pbs, precio_pbs, stock_pbs} = pbs;
             const existingPbs = await getPbsKeyByKey(clave_pbs);
 
-            if(existingPbs == clave_pbs){
+            if(existingPbs.clave_pbs === clave_pbs){
                 await updatePbsStock(clave_pbs, precio_pbs, stock_pbs);
                 console.log("Actualizado");
             }else {
                 await createPbs(clave_pbs, marca_pbs, precio_pbs, stock_pbs);
-                console.log("Agregado");
             }
         }
 

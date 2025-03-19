@@ -2,84 +2,80 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
-    color: #333;
+    background-color: #1C1C1C;
+    color: #F4F4F4;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
-/* Header */
 header {
-    background-color: #444;
-    color: #fff;
+    background-color: #1C1C1C;
+    color: #F4F4F4;
     padding: 10px 20px;
     display: flex;
     justify-content: space-between;
-    /* Espacio entre logo y menú */
     align-items: center;
+    z-index: 100;
 }
 
-/* Logo */
 .logo {
     font-size: 1.5em;
     font-weight: bold;
 }
 
-/* Logo como enlace */
 .logo a {
-    color: #fff;
+    color: #F4F4F4;
     text-decoration: none;
 }
 
-/* Hover para el logo */
 .logo a:hover {
-    color: #ddd;
+    color: #007BFF;
 }
 
-/* Navegación */
 nav ul {
     list-style: none;
     margin: 0;
     padding: 0;
     display: flex;
-    /* Alinea los elementos en una línea */
 }
 
-/* Elementos del menú */
 nav ul li {
     margin: 0 15px;
 }
 
-/* Enlaces del menú */
 nav ul li a {
-    color: #fff;
+    color: #F4F4F4;
     text-decoration: none;
     font-size: 1em;
 }
 
-/* Hover en enlaces */
 nav ul li a:hover {
-    color: #ddd;
+    color: #007BFF;
 }
-/* Login Box */
+
 main {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 80vh;
+    flex: 1;
+    padding: 30px 0;
 }
 
 .login-box {
-    background-color: #fff;
+    background-color: #F4F4F4;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     width: 300px;
     text-align: center;
+    margin-bottom: 20px;
 }
 
 .login-box h1 {
     margin-bottom: 20px;
     font-size: 1.8em;
-    color: #444;
+    color: #1C1C1C;
 }
 
 .login-box form {
@@ -91,20 +87,20 @@ main {
     text-align: left;
     font-size: 0.9em;
     margin-bottom: 5px;
-    color: #555;
+    color: #1C1C1C;
 }
 
 .login-box input {
     padding: 10px;
     margin-bottom: 15px;
-    border: 1px solid #ccc;
+    border: 1px solid #C0C0C0;
     border-radius: 4px;
     font-size: 1em;
 }
 
 .login-box button {
-    background-color: #444;
-    color: #fff;
+    background-color: #FF5733;
+    color: #F4F4F4;
     padding: 10px;
     border: none;
     border-radius: 4px;
@@ -113,14 +109,14 @@ main {
 }
 
 .login-box button:hover {
-    background-color: #555;
+    background-color: #007BFF;
 }
 
 .login-box .forgot-password {
     display: block;
     margin-top: 10px;
     font-size: 0.9em;
-    color: #007bff;
+    color: #007BFF;
     text-decoration: none;
 }
 
@@ -129,69 +125,54 @@ main {
 }
 
 #register-button {
-    background-color: #444;
-    color: #fff;
+    background-color: #FF5733;
+    color: #F4F4F4;
     padding: 10px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     font-size: 1em;
     text-decoration: none;
-    /* Para quitar el subrayado de los enlaces */
     display: inline-block;
-    /* Para que los botones se comporten correctamente */
     margin: 5px 0;
-    /* Añadir margen entre los botones */
 }
 
 #forgot-button {
-    background-color: #444;
-    color: #fff;
+    background-color: #FF5733;
+    color: #F4F4F4;
     padding: 10px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     font-size: 1em;
     text-decoration: none;
-    /* Para quitar el subrayado de los enlaces */
     display: inline-block;
-    /* Para que los botones se comporten correctamente */
     margin: 5px 0;
-    /* Añadir margen entre los botones */
 }
 
 #register-button a,
 #forgot-button a {
-    color: #fff;
-    /* Asegura que el texto del enlace sea blanco */
+    color: #F4F4F4;
     text-decoration: none;
-    /* Quita el subrayado de los enlaces */
     display: block;
-    /* Asegura que el enlace ocupe todo el botón */
     width: 100%;
-    /* Asegura que el enlace ocupe todo el ancho del botón */
     height: 100%;
-    /* Asegura que el enlace ocupe toda la altura del botón */
 }
 
-/* Footer */
 footer {
-    background-color: #444;
-    color: #fff;
+    background-color: #1C1C1C;
+    color: #F4F4F4;
     text-align: center;
     padding: 10px 0;
     font-size: 0.9em;
-    position: relative;
-    bottom: 0;
     width: 100%;
 }
 
 footer a {
-    color: #fff;
+    color: #F4F4F4;
     text-decoration: underline;
 }
 
 footer a:hover {
-    color: #bbb;
+    color: #007BFF;
 }
-

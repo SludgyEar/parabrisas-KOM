@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import "./styles/adminStyle.css";
+import "../styles/adminStyle.css";
+import { Link } from "react-router-dom";
 
 const AdminCrud = () => {
     // Cambio de divs por estado
@@ -112,9 +113,9 @@ const AdminCrud = () => {
 
     return (
         <div>
-            <header>
+            <header className="header">
                 <div className="logo">
-                    <a href="#">CRUD de Usuarios</a>
+                    <Link><p>CRUD de Usuarios</p></Link>
                 </div>
                 <nav>
                     <ul>
@@ -263,9 +264,11 @@ const AdminCrud = () => {
 
                 </div>
             </div>
-            <footer>
-                <p>Contacto: info@parabrisaskom.com | Tel: +52 123 456 7890</p>
-                <p><a href="#">Términos y Condiciones</a></p>
+            <footer className="footer">
+                <strong>
+                    <p>Contacto: info@parabrisaskom.com | Tel: +52 123 456 7890</p>
+                    <p><a href="#">Términos y Condiciones</a></p>
+                </strong>
             </footer>
         </div>
     );

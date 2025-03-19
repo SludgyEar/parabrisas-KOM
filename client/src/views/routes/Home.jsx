@@ -1,15 +1,15 @@
 import React from "react";
 import { useNavigate, Link } from "react-router-dom";
-import "./styles/homeStyle.css"; // Archivo CSS para estilos
+import "../styles/homeStyle.css"; // Archivo CSS para estilos
 
 function Home() {
     const navigate = useNavigate();
 
     return (
         <div>
-            <header>
+            <header className="header">
                 <div className="logo" id="logo">
-                    <Link to="/"> <h1 className="logo" id="nombre-logo">Parabrisas Kom</h1> </Link>
+                    <h1 className="logo" id="nombre-logo">Parabrisas Kom</h1>
                 </div>
             </header>
 
@@ -24,9 +24,11 @@ function Home() {
                 </div>
             </main>
 
-            <footer>
-                <p>Contacto: info@parabrisaskom.com | Tel: +52 123 456 7890</p>
-                <p><a href="#">Términos y Condiciones</a></p>
+            <footer className="footer">
+                <strong>
+                    <p>Contacto: info@parabrisaskom.com | Tel: +52 123 456 7890</p>
+                    <p><a href="#">Términos y Condiciones</a></p>
+                </strong>
             </footer>
         </div>
     );

@@ -1,7 +1,8 @@
 import React, {useState} from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, Navigate } from "react-router-dom";
 import axios from "axios";
-import "./styles/registerStyle.css"; // Asegúrate de importar tu CSS
+import "../styles/registerStyle.css"; // Asegúrate de importar tu CSS
+import { useAuth } from "../providers/UserProvider";
 
 function Register() {
 
@@ -22,20 +23,27 @@ function Register() {
     const handleSubmit = async (e) =>{
         e.preventDefault();
         try {
-            await axios.post("http://localhost:5000/register", usuario);
-            navigate("/");
+            const res = await axios.post("http://localhost:5000/register", usuario);
+            if (res.status === 201) {
+                navigate("/login");
+            }
         } catch (err) {console.log(err);}
     };
 
+    const auth = useAuth();
+    if (auth.isAuth) {
+        return <Navigate to="/userDashBoard" />;
+    }
+
     return (
         <div>
-            <header>
+            <header className="header">
                 <div className="logo" id="logo">
                     <Link to="/"> <h1 className="logo" id="nombre-logo">Parabrisas Kom</h1> </Link>
                 </div>
             </header>
 
-            <main>
+            <main className="main">
                 <div className="register-box">
                     <h1>Registro de usuario</h1>
                     <form onSubmit={handleSubmit}>
@@ -68,36 +76,20 @@ function Register() {
                         placeholder="Ingresa tu contraseña"
                         required
                         />
-
-
                         <button type="submit" >Registrarse</button>
-                        <button type="reset">Limpiar</button>
                         <button type="button" onClick={() => navigate("/")}>Cancelar</button>
                     </form>
                 </div>
             </main>
 
-            <footer>
-                <p>Contacto: info@parabrisaskom.com | Tel: +52 123 456 7890</p>
-                <p><a href="#">Términos y Condiciones</a></p>
+            <footer className="footer">
+                <strong>
+                    <p>Contacto: info@parabrisaskom.com | Tel: +52 123 456 7890</p>
+                    <p><a href="#">Términos y Condiciones</a></p>
+                </strong>
             </footer>
         </div>
     );
 }
 
 export default Register;
-
-
-/*
-    Tatis:
-    En un sistema qué entidades de negocio tengo: entidad casi siempre = objeto
-    Banco:
-        Clientes, prestamos, tarjetas, sucursales, etc.
-    Estas entdades qué mensajes envían: Si quiero una consulta de un tarjeta ¿qué tengo que enviar?
-    "Si quiero preguntar si esta tarjeta existe, puedo preguntar por
-    Número
-    Dueño
-    Redefinir qué va a hacer el sistema"
-    Entidades y qué desarrollan
-    Roles - Actividades que desempeña cada elemento dentro del sistema
-*/

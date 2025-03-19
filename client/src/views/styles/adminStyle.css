@@ -95,6 +95,11 @@ nav ul li a:hover {
     /* Centra el texto dentro de la sección */
 }
 
+#insert {
+    width: 50%;
+    margin-bottom: 20px;
+}
+
 #contenedor {
     display: flex;
     flex-direction: column;
@@ -102,10 +107,6 @@ nav ul li a:hover {
     width: 100%;
 }
 
-#insert {
-    width: 50%;
-    margin-bottom: 20px;
-}
 #update{
     width: 50%;
     margin-bottom: 20px;
@@ -125,9 +126,10 @@ input[type="text"],
 input[type="password"],
 input[type="submit"],
 input[type="reset"] {
-    padding: 8px;
+    padding: 10px;
     /* margin-bottom: 4px; */
-    margin-top: 4px;
+    margin-top: 6px;
+    margin-bottom: 4px;
     border: 1px solid #ccc;
     border-radius: 4px;
     width: 80%;
@@ -137,13 +139,13 @@ input[type="reset"] {
 
 input[type="submit"],
 input[type="reset"] {
-    background-color: #444;
+    background-color: #FF5733;
     color: #fff;
     cursor: pointer;
 }
 
 input[type="submit"], input[type="reset"]:hover {
-    background-color: #555;
+    background-color: #FF5733;
     box-shadow: 0 0 5px #444, 0 0 10px white, 0 0 15px #ccc, 0 0 20px #ddd;
 }
 
@@ -167,7 +169,7 @@ input[type="submit"], input[type="reset"]:hover {
 }
 
 .select-custom {
-    background-color: #444;
+    background-color: #3498DB;
     color: white;
     border: 1px solid #ccc;
     border-radius: 8px;
@@ -187,7 +189,7 @@ input[type="submit"], input[type="reset"]:hover {
 .select-custom:focus {
     outline: none;
     border-color: #ddd;
-    box-shadow: 0 0 5px #444, 0 0 10px white, 0 0 15px #ccc, 0 0 20px #ddd;
+    box-shadow: 0 0 5px #0f32a3, 0 0 10px white, 0 0 15px #8b0606, 0 0 20px #ddd;
 }
 
 /* ===========================
@@ -292,7 +294,7 @@ td:nth-child(8) {
 #buscar-usuario{
     font-size: 12px;
     padding: 15px 10px;
-    background-color: #555;
+    background-color: #28b463;
     color: #fff;
     cursor: pointer;
     margin-bottom: 10px;

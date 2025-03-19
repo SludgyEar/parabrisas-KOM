@@ -2,71 +2,70 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
-    color: #333;
+    background-color: #1C1C1C;
+    color: #F4F4F4;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
-/* Header */
 header {
-    background-color: #444;
-    color: #fff;
+    background-color: #1C1C1C;
+    color: #F4F4F4;
     padding: 10px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    z-index: 100;
 }
 
-/* Logo */
 .logo {
     font-size: 1.5em;
     font-weight: bold;
 }
 
-/* Logo como enlace */
 .logo a {
-    color: #fff;
+    color: #F4F4F4;
     text-decoration: none;
 }
 
-/* Hover para el logo */
 .logo a:hover {
-    color: #ddd;
+    color: #007BFF;
 }
 
-
-
-/* Main Content */
 main {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 80vh;
+    flex: 1;
+    padding: 30px 0;
 }
 
-/* Welcome Box */
 .welcome-box {
-    background-color: #fff;
+    background-color: #F4F4F4;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     width: 400px;
     text-align: center;
+    margin-bottom: 20px;
 }
 
 .welcome-box h1 {
     font-size: 1.8em;
     margin-bottom: 10px;
+    color: #1C1C1C;
 }
 
 .welcome-box p {
     font-size: 1em;
-    color: #555;
+    color: #1C1C1C;
     margin-bottom: 15px;
 }
 
 .welcome-box button {
-    background-color: #444;
-    color: #fff;
+    background-color: #FF5733;
+    color: #F4F4F4;
     padding: 15px;
     border: none;
     border-radius: 4px;
@@ -78,26 +77,23 @@ main {
 }
 
 .welcome-box button:hover {
-    background-color: #555;
+    background-color: #007BFF;
 }
 
-/* Footer */
 footer {
-    background-color: #444;
-    color: #fff;
+    background-color: #1C1C1C;
+    color: #F4F4F4;
     text-align: center;
     padding: 10px 0;
     font-size: 0.9em;
-    position: relative;
-    bottom: 0;
     width: 100%;
 }
 
 footer a {
-    color: #fff;
+    color: #F4F4F4;
     text-decoration: underline;
 }
 
 footer a:hover {
-    color: #bbb;
+    color: #007BFF;
 }
