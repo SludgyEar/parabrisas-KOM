@@ -15,22 +15,6 @@ CREATE TABLE Parabrisas(
 -- drop trigger update_state_by_stock;
 -- drop table Parabrisas;
 
-DELIMITER //
-CREATE TRIGGER update_state_by_stock
-AFTER UPDATE ON PARABRISAS
-FOR EACH ROW
-BEGIN
-	UPDATE PARABRISAS
-    SET ESTADO_PBS = CASE
-		WHEN NEW.STOCK_PBS <= 0 THEN 'AGOTADO'
-        ELSE 'DISPONIBLE'
-	END
-	WHERE ID_PBS = NEW.ID_PBS;
-END;
-//
-DELIMITER ;
-
-SELECT * FROM PARABRISAS;
 SELECT clave_pbs, COUNT(*) as total
 FROM parabrisas
 GROUP BY clave_pbs
@@ -40,3 +24,11 @@ DELETE FROM PARABRISAS WHERE 1=1;
 
 insert into PARABRISAS (clave_pbs, marca_pbs, precio_pbs, stock_pbs) values ('FW00399GUY', 'TOYOTA', 2214, 13);
 insert into PARABRISAS (clave_pbs, marca_pbs, precio_pbs, stock_pbs) values ('FW00212EGF', 'MAZDA', 1975, 13);
+
+SELECT * FROM PARABRISAS;
+
+SELECT PRECIO_PBS
+FROM PARABRISAS
+WHERE ID_PBS > 618
+AND ID_PBS < 701;
+

@@ -118,3 +118,39 @@
     padding: 10px;
     font-size: 14px;
 }
+
+.content{
+    display: flex;
+    width: 600px;
+    
+}
+#perfi-main-container{
+    display: flex;
+    align-items: center;
+    width: 600px;
+    height: 600px;
+}
+
+#citas-main-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 600px;
+    height: 600px;
+}
+
+.citas-title{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    width: 800px;
+    height: 50px;
+    margin-bottom: 10px;
+}
+
+#ventas-main-content{
+    display: flex;
+    flex-direction: column;
+    width: 900px;
+    height: 900px;
+}

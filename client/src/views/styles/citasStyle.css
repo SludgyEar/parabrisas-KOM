@@ -1,0 +1,139 @@
+.citas-container{
+    display: flex;
+    height: 100%;
+    width: 800px;
+    flex-direction: column;
+}
+
+.user-citas-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+#citas-title{
+    display: flex;
+    flex-direction: row;
+    justify-items: flex-start;
+    width: 50px;
+    height: 1px; 
+}
+
+.citas-table{
+    display: flex;;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    border-collapse: collapse;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.citas-table table {
+    width: 100%;
+    height: 100%;
+}
+
+.citas-table th,
+.citas-table td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: left;
+    width: calc(100% / 3);
+}
+/*Recepcionista div css:*/
+.recepcionista-citas-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    gap: 10px;
+}
+
+.tabs-container {
+    width: 100%;
+    height: 100%;
+    /* max-width: 600px; */
+    margin: 0 auto;
+    background: #1C1C1C;
+    /* Fondo oscuro */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.tabs-header {
+    display: flex;
+    border-bottom: 2px solid #F4F4F4;
+    /* Borde claro */
+}
+
+.tabs-header button {
+    flex: 1;
+    padding: 12px;
+    text-align: center;
+    font-weight: bold;
+    border-bottom: 2px solid transparent;
+    background: none;
+    color: #F4F4F4;
+    /* Texto claro */
+    cursor: pointer;
+    transition: border-color 0.3s ease-in-out;
+}
+
+.tabs-header button:hover {
+    border-bottom-color: #007BFF;
+    /* Azul para hover */
+}
+
+.tabs-header button.active {
+    border-bottom-color: #FF5733;
+    /* Naranja para la pestaña activa */
+    color: #FF5733;
+}
+
+.tabs-content {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    background: #F4F4F4;
+    color: #1C1C1C;
+    border-radius: 0 0 8px 8px;
+}
+
+.crear-cita{
+    display: flex;
+    width: 90%;
+    height: 80%;
+}
+
+.crear-cita form{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    width: 100%;
+    height: 100%;
+}
+
+.date-picker{
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    margin: 0 auto 0 auto;
+    padding: 0 0 0 20px;
+    
+}
+
+.motivo-cita{
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    margin: 0 auto 0 auto;
+    padding: 0 0 0 20px;
+}
