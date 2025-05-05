@@ -90,3 +90,8 @@ AND CORREO_USR = "daniela@ejemplo.com";
 UPDATE USUARIOS
 SET PERFIL_USR = "C"
 WHERE FULL_NAME_USR = "juan ledesma";
+
+SELECT ID_USR
+FROM USUARIOS
+WHERE FULL_NAME_USR = 'Daniela Ledesma Erreguin'
+AND CORREO_USR = 'daniela@ejemplo.com';

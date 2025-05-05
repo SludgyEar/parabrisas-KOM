@@ -27,7 +27,7 @@ WHERE fecha_venta >= '2024-03-01'
 
 SELECT COUNT(*) AS TOTAL
 FROM VENTAS
-WHERE FECHA_VENTA LIKE '%2024-03%';
+WHERE FECHA_VENTA LIKE '%2024-04%';
 
 -- Ingresos totales por mes:
 SELECT SUM(TOTAL_VENTA) AS VENTAS
@@ -43,12 +43,12 @@ ORDER BY total_vendidos DESC
 LIMIT 1;
 
 -- Cliente más frecuente en el mes:
-SELECT u.nombre_usr -- , COUNT(*) AS total_compras
+SELECT u.nombre_usr AS NOMBRE, COUNT(*) AS COMPRAS
 FROM ventas v
 JOIN usuarios u ON v.id_usr = u.id_usr
 WHERE fecha_venta LIKE '2024-03%'
 GROUP BY v.id_usr
-ORDER BY total_compras DESC
+ORDER BY COMPRAS DESC
 LIMIT 1;
 -- Las compras de los clientes en un mes:
 SELECT U.NOMBRE_USR, V.ID_USR, COUNT(*) AS COMPRAS
@@ -105,8 +105,7 @@ SELECT
     p.stock_pbs AS Pzas_Restantes
 FROM VENTAS v
 JOIN PARABRISAS p ON v.id_pbs = p.id_pbs
-WHERE fecha_venta BETWEEN DATE_ADD('2024-07-01', INTERVAL -6 MONTH) 
-                      AND DATE_ADD('2024-07-01', INTERVAL -1 DAY)
+WHERE fecha_venta LIKE '%2024-03%'
 GROUP BY p.marca_pbs, p.clave_pbs, p.stock_pbs
 ORDER BY p.marca_pbs, Pzas_Vendidas DESC;
 
@@ -126,3 +125,12 @@ SELECT u.nombre_usr AS COMPRAS
     WHERE fecha_venta LIKE '%2024-07%'
     GROUP BY v.id_usr
     LIMIT 1  ;
+    
+SELECT 
+DATE_FORMAT(FECHA_VENTA, '%Y-%m') AS MES,
+COUNT(*) AS TOTAL_VENTAS
+FROM VENTAS
+WHERE FECHA_VENTA BETWEEN DATE_ADD('2024-07-01', INTERVAL -6 MONTH) 
+					AND DATE_ADD('2024-07-01', INTERVAL -1 DAY)
+GROUP BY MES
+ORDER BY MES ;

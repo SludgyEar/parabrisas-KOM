@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import '../styles/testStyle.css';
+import '../styles/citasStyle.css';
 import { useAuth } from '../providers/UserProvider';
 import axios from 'axios';
 import Modal from '../services/Modal';
@@ -35,6 +35,7 @@ const Citas = () => {
         e.preventDefault();
         try {
             if (disponible) {
+                // const usuario = await axios.get("http://localhost:5000/clientCita", {params})
                 await axios.post("http://localhost:5000/crearCita", { id_usr: auth.user.ID_USR, fecha: fechaCita, motivo: motivo });
             }
             setIsModalOpen(true);
@@ -48,6 +49,7 @@ const Citas = () => {
     }, [fechaCita, disponible,setIsModalOpen]);
     return (
         <div className="citas-container">
+            <h1>Citas</h1>
             {(auth.user.PERFIL_USR === 'D') ? (
                 <div className="recepcionista-citas-container">
 
@@ -85,6 +87,10 @@ const Citas = () => {
                                                 defaultValue={dateTimeLocalNow}
                                                 onChange={handleSetFechaCita}
                                             />
+                                            <h2>Datos del Cliente</h2>
+                                            <input type="text" placeholder='Nombre Completo' id='cliente-nombre'/>
+                                            <input type="text" placeholder='Email - Correo Electrónico' id='cliente-email' />
+                                        
                                         </div>
                                         <div className='motivo-cita'>
                                             <h2>Motivo de la cita</h2>

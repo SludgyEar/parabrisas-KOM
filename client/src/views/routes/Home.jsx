@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import "../styles/homeStyle.css"; // Archivo CSS para estilos
+import { useAuth } from "../providers/UserProvider";
+import FeedBack from "../services/FeedBack";
 
 function Home() {
     const navigate = useNavigate();
-
+    const auth = useAuth();
+                       
     return (
         <div>
             <header className="header">
@@ -22,6 +25,22 @@ function Home() {
                     <button onClick={() => navigate("/register")}>Registrarse</button>
                     <button onClick={() => navigate("/login")}>Iniciar Sesión</button>
                 </div>
+                {auth.feedback && (
+                    <div className="overlay">
+                        <div className="overlay-content">
+                            <h2>¡Gracias por tu visita!</h2>
+                            <p>Tu opinión es importante para nosotros. ¿Podrías contestar una encuesta de satisfacción?</p>
+                            <button onClick={ () => {
+                                auth.handleFeedback();
+                                console.log("Feedback: ", auth.feedback);
+                                
+                                navigate('/feedback');
+                            } }>Aceptar</button>
+                            <button onClick={() => auth.handleFeedback()}>Cerrar</button>
+                        </div>
+                    </div>
+                )}
+                
             </main>
 
             <footer className="footer">

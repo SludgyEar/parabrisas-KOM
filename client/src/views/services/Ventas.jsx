@@ -42,7 +42,7 @@ function Ventas() {
 
     return (
         <div className='ventas-container-top'>
-            {(auth.user.PERFIL_USR === 'D') ? (
+            {(auth.user.PERFIL_USR === 'D' || auth.user.PERFIL_USR === 'C') ? (
                 <div className='ventas-container'>
                     <h1>Ventas</h1>
                     <form className='ventas-form'>

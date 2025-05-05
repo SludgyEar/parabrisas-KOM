@@ -1,3 +1,8 @@
+main{
+    display: flex;
+    height: 800px;
+}
+
 /* Estilos generales */
 .dashboard {
     display: flex;

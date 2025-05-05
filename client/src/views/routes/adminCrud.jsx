@@ -137,16 +137,16 @@ const AdminCrud = () => {
                             <input type="password" placeholder="Contraseña" name="passwd" onChange={handleUser} required />
                             <div className="select-container">
                                 <select name="perfil" className="select-custom" value={user.perfil} onChange={handleUser}>
-                                    <option value="A">A</option>
-                                    <option value="B">B</option>
-                                    <option value="C">C</option>
-                                    <option value="D">D</option>
+                                    <option value="A">Usuario</option>
+                                    <option value="B">Ventas</option>
+                                    <option value="C">Super Usuario</option>
+                                    <option value="D">Recepcionista</option>
                                     <option value="E">E</option>
                                 </select>
 
                                 <select name="status" className="select-custom" value={user.status} onChange={handleUser}>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
+                                    <option value="1">Activo</option>
+                                    <option value="2">Inactivo</option>
                                 </select>
                             </div>
 
@@ -162,16 +162,16 @@ const AdminCrud = () => {
                             <input type="password" placeholder="Contraseña" name="passwd" onChange={handleUser} />
                             <div className="select-container">
                                 <select name="perfil" className="select-custom" value={user.perfil} onChange={handleUser}>
-                                    <option value="A">A</option>
-                                    <option value="B">B</option>
-                                    <option value="C">C</option>
-                                    <option value="D">D</option>
+                                    <option value="A">Usuario</option>
+                                    <option value="B">Ventas</option>
+                                    <option value="C">Super Usuario</option>
+                                    <option value="D">Recepcionista</option>
                                     <option value="E">E</option>
                                 </select>
 
                                 <select name="status" className="select-custom" value={user.status} onChange={handleUser}>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
+                                    <option value="1">Activo</option>
+                                    <option value="2">Inactivo</option>
                                 </select>
                             </div>
                             <input type="submit" value="Guardar" id="edit-user" />

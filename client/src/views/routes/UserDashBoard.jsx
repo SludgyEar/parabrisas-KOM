@@ -2,13 +2,28 @@ import React, {useState} from "react";
 import "../styles/userDashBoard.css"; // Importa el archivo CSS
 // import Catalogo from "./services/Catalogo.jsx"; // Importa el componente Catálogo
 import Catalogo from "../services/Catalogo";
+import Perfil from "../services/Perfil";
+import Citas from "../services/Citas";
+import Ventas from "../services/Ventas";
+import { useAuth } from "../providers/UserProvider";
+import { useNavigate } from "react-router-dom";
 
 const UserDashBoard = () => {
+    const navigate = useNavigate();
+    const auth = useAuth();
     const [selectedService, setSelectedService] = useState("catálogo"); // Estado para el servicio seleccionado
 
     // Función para cambiar el servicio seleccionado
     const handleServiceClick = (service) => {
         setSelectedService(service);
+    };
+
+    // Función para manejar el cierre de sesión
+    const handleLogout = () => {
+        auth.handleLogout();
+        auth.handleFeedback();
+        navigate("/");
+
     };
 
     return (
@@ -17,10 +32,10 @@ const UserDashBoard = () => {
             <header className="header">
                 <h1>Parabrisas Kom</h1>
                 <div className="userMenu">
-                    <span>Usuario</span>
+                    <span>{auth.user.NOMBRE_USR}</span>
                     <div className="userDropdown">
                         <button>Perfil</button>
-                        <button>Cerrar sesión</button>
+                        <button onClick={handleLogout}>Cerrar sesión</button>
                     </div>
                 </div>
             </header>
@@ -39,10 +54,10 @@ const UserDashBoard = () => {
                         Perfil
                     </button>
                     <button
-                        className={selectedService === "facturas" ? "active" : ""}
-                        onClick={() => handleServiceClick("facturas")}
+                        className={selectedService === "ventas" ? "active" : ""}
+                        onClick={() => handleServiceClick("ventas")}
                     >
-                        Facturas
+                        Ventas
                     </button>
                     <button
                         className={selectedService === "citas" ? "active" : ""}
@@ -54,22 +69,27 @@ const UserDashBoard = () => {
 
                 <main className="content">
                     {selectedService === "catálogo" && 
-                    <div>
+                    <div >
                         <h1>Parabrisas disponibles !</h1>
                         <Catalogo/>
                     </div>}
+
                     {selectedService === "perfil" &&
-                    <div>
-                        Contenido del Perfil
+                    <div id="perfil-main-container">
+                        <Perfil/>
                     </div>}
-                    {selectedService === "facturas" &&
-                    <div>
-                        Contenido de Facturas
+
+                    {selectedService === "ventas" &&
+                    <div id="ventas-main-container">
+                        <Ventas />
                     </div>}
+
                     {selectedService === "citas" &&
-                    <div>
-                        Contenido de Citas
+                    <div id="citas-main-container">
+                        
+                        <Citas/>
                     </div>}
+
                 </main>
             </div>
 

@@ -97,3 +97,59 @@ footer a {
 footer a:hover {
     color: #007BFF;
 }
+/*
+Encuesta de Satisfacción
+*/
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    overflow-y: auto;
+}
+
+.overlay-content {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    max-height: 90vh;
+    overflow-y: auto;
+    margin: 20px;
+    align-items: center;
+}
+
+.overlay-content button {
+    width: 90px;
+    height: 28px;
+    background-color: #007B9E;
+    color: #fff;
+    border: 2px solid #005f73;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin: 3px 0;
+}
+.overlay-content button:hover {
+    background-color: #ff0000;
+    transform: scale(1.05);
+}
+
+.encuesta-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}

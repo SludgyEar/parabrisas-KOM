@@ -1,11 +1,11 @@
-.citas-container{
+.citas-container {
     display: flex;
     height: 100%;
     width: 800px;
     flex-direction: column;
 }
 
-.user-citas-container{
+.user-citas-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -13,16 +13,18 @@
     height: 100%;
 }
 
-#citas-title{
+#citas-title {
     display: flex;
     flex-direction: row;
     justify-items: flex-start;
     width: 50px;
-    height: 1px; 
+    height: 1px;
+
 }
 
-.citas-table{
-    display: flex;;
+.citas-table {
+    display: flex;
+    ;
     flex-direction: column;
     justify-content: center;
     width: 100%;
@@ -43,7 +45,8 @@
     text-align: left;
     width: calc(100% / 3);
 }
-/*Recepcionista div css:*/
+
+/*Recepcionista*/
 .recepcionista-citas-container {
     display: flex;
     flex-direction: row;
@@ -107,33 +110,111 @@
     border-radius: 0 0 8px 8px;
 }
 
-.crear-cita{
+.crear-cita {
     display: flex;
     width: 90%;
     height: 80%;
+    flex-direction: column;
+    align-items: center;
 }
 
-.crear-cita form{
+.crear-cita form {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: flex-start;
     width: 100%;
     height: 100%;
 }
 
-.date-picker{
-    display: flex;
-    flex-direction: column;
-    width: 300px;
-    margin: 0 auto 0 auto;
-    padding: 0 0 0 20px;
-    
+.crear-cita form input {
+    margin-bottom: 10px;
+    width: 200px;
+    height: 25px;
 }
 
-.motivo-cita{
+.date-picker {
     display: flex;
     flex-direction: column;
-    width: 300px;
+    width: 400px;
     margin: 0 auto 0 auto;
     padding: 0 0 0 20px;
+    justify-content: center;
+    align-items: center;
+
+}
+
+#date-input {
+    width: 300px;
+    padding: 5px;
+    font-size: 16px;
+    border: 2px solid #007B9E;
+    border-radius: 5px;
+    color: #3e3939;
+    outline: none;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+    text-align: center;
+}
+
+#cliente-nombre{ /*Labels*/
+    width: 300px;
+    padding: 5px;
+    font-size: 16px;
+    border: 2px solid #007B9E;
+    border-radius: 5px;
+    color: #3e3939;
+    outline: none;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+    text-align: center;
+}
+#cliente-email{ /*Labels*/
+    width: 300px;
+    padding: 5px;
+    font-size: 16px;
+    border: 2px solid #007B9E;
+    border-radius: 5px;
+    color: #3e3939;
+    outline: none;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+    text-align: center;
+}
+
+#date-input:focus {
+    border-color: #005F73;
+    box-shadow: 0 0 8px rgba(0, 95, 115, 0.5);
+}
+
+.motivo-cita {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    margin: 0 auto 0 auto;
+    justify-content: center;
+    align-items: center;
+    padding: 0 0 0 20px;
+}
+
+.motivo-cita button {
+    width: 100px;
+    height: 30px;
+    background-color: #0740e9;
+    color: white;
+    border-color: #007B9E;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+    margin-bottom: 20px;
+}
+
+.motivo-select {
+    text-align: center;
+    width: 314px;
+    height: 40px;
+    padding: 5px;
+    font-size: 16px;
+    border: 2px solid #007B9E;
+    border-radius: 5px;
+    color: #3e3939;
+    outline: none;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+    margin-bottom: 30px;
 }

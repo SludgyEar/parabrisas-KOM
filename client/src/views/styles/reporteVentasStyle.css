@@ -13,13 +13,10 @@
     width: 100vw;
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.5);
-    /* Color semi-transparente */
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 1000;
-    /* Aparece sobre otros elementos */
-    /* CAMBIO: Agregado overflow-y para permitir scroll cuando el contenido excede la altura */
     overflow-y: auto;
 }
 
@@ -32,12 +29,26 @@
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     display: flex;
     flex-direction: column;
-    /* CAMBIO: Agregado max-height para limitar la altura y activar el scroll */
     max-height: 90vh;
-    /* CAMBIO: Agregado overflow-y para permitir scroll dentro del contenedor */
     overflow-y: auto;
-    /* CAMBIO: Agregado margin para evitar que el contenido toque los bordes de la pantalla */
     margin: 20px;
+    align-items: center;
+}
+
+.overlay-content button{
+    width: 90px;
+    height: 28px;
+    background-color: #007B9E;
+    color: #fff;
+    border: 2px solid #005f73;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.overlay-content button:hover {
+    background-color: #ff0000;
+    transform: scale(1.05);
 }
 
 .input-wrapper {
@@ -97,8 +108,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    /* CAMBIO: Agregado width para asegurar que se ajuste al contenedor padre */
-    width: 100%;
+    width: 75%;
 }
 
 .reporteVentas p {
@@ -134,4 +144,13 @@
 #cancelar-button:hover{
     background-color: #ff0000;
     transform: scale(1.05);
+}
+
+.table-detalle-content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 75%;
+    
 }

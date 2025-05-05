@@ -1,9 +1,11 @@
 import { useState } from 'react';
-import "../styles/feedBackStyle.css";
+import "../styles/feedBackStyle.css"; // Archivo CSS para estilos
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 
-
-export default function EncuestaSatisfaccion() {
+export default function FeedBack() {
+    const navigate = useNavigate();
     const preguntas = [
         "¿La interfaz te parece atractiva?",
         "¿La interfaz es fácil de usar?",
@@ -14,7 +16,7 @@ export default function EncuestaSatisfaccion() {
     ];
 
     const [preguntaActual, setPreguntaActual] = useState(0);
-    const [respuestas, setRespuestas] = useState(Array(preguntas.length).fill(""));
+    const [respuestas, setRespuestas] = useState(Array(preguntas.length).fill("")); // 
     const [encuestaCompletada, setEncuestaCompletada] = useState(false);
 
     const handleRespuesta = (valorRespuesta) => {
@@ -43,11 +45,20 @@ export default function EncuestaSatisfaccion() {
         }
     };
 
-    const reiniciarEncuesta = () => {
+    const handleSendFeedBack = () => {
+        try{
+            axios.post("http://localhost:5000/feedback", respuestas);
+        }catch(err){ console.error(err) }
+    };
+
+    const finalizarEncuesta = () => {
+        handleSendFeedBack(); // Enviar las respuestas al servidor
         setPreguntaActual(0);
         setRespuestas(Array(preguntas.length).fill(""));
         setEncuestaCompletada(false);
+        navigate("/"); // Redirigir a la página de inicio o donde desees
     };
+
 
     // Verificar si la pregunta actual requiere entrada de texto (la última pregunta)
     const esInputTexto = preguntaActual === preguntas.length - 1;
@@ -75,10 +86,10 @@ export default function EncuestaSatisfaccion() {
                 </div>
 
                 <button
-                    onClick={reiniciarEncuesta}
+                    onClick={finalizarEncuesta}
                     className="boton-reiniciar"
                 >
-                    Iniciar nueva encuesta
+                    Finalizar
                 </button>
             </div>
         );
@@ -119,8 +130,8 @@ export default function EncuestaSatisfaccion() {
                                 key={valor}
                                 onClick={() => handleRespuesta(valor)}
                                 className={`boton-valoracion ${respuestas[preguntaActual] === valor
-                                    ? "boton-valoracion-seleccionado"
-                                    : "boton-valoracion-no-seleccionado"
+                                        ? "boton-valoracion-seleccionado"
+                                        : "boton-valoracion-no-seleccionado"
                                     }`}
                             >
                                 {valor}
@@ -135,8 +146,8 @@ export default function EncuestaSatisfaccion() {
                     onClick={handleAnterior}
                     disabled={preguntaActual === 0}
                     className={`boton-anterior ${preguntaActual === 0
-                        ? "boton-anterior-inactivo"
-                        : "boton-anterior-activo"
+                            ? "boton-anterior-inactivo"
+                            : "boton-anterior-activo"
                         }`}
                 >
                     Anterior

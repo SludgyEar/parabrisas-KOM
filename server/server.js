@@ -2,8 +2,8 @@ import express from 'express';
 import { getUsers, getUserById, createUser, loginUser, getUserByEmail, getUserByName, logicalDelete,
         updateUser, updateUserWPasswd, getActiveUsers, getInactiveUsers, getUserPasswd, getUserByPerfil, 
         getAllPbs, getPbsByMark, getPbsByKey, getPbsByState, updatePbsStock, getPbsKeyByKey, createPbs, 
-        getCitas, createCita, getCitaByDate, checkAvailableCita, getTelRFC, cantVentasPbsMes, totalVentasPbsMes,
-        pbsMasVendidoMes, clienteFrecuenteMes, cantVentasGrafica, concentradoVentas } from './database.js';
+        getCitas, createCita, getCitaByDate, getUserIDToCita, checkAvailableCita, getTelRFC, cantVentasPbsMes, totalVentasPbsMes,
+        pbsMasVendidoMes, clienteFrecuenteMes, cantVentasGrafica, concentradoVentas, createFeedBack } from './database.js';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import CryptoJS from "crypto-js";
@@ -200,6 +200,14 @@ app.get('/citas', async (req, res) => {
     res.status(201).send(citas);
 });
 
+app.get('/clientCita', async (req, res) => {
+    try{
+        const {fullName, email} = req.query;
+        const user = await getUserIDToCita(fullName, email);
+        res.status(200).send(user);
+    }catch(err){ res.status(400).send('Error al obtener la cita'); }
+});
+
 app.post('/crearCita', async (req, res) => {
     try{
         const { id_usr, fecha, motivo } = req.body;
@@ -284,35 +292,22 @@ app.get("/cantVentasGrafica", async (req, res) => {
 
 app.get("/concentradoVentas", async (req, res) => {
     try{
-        const concentrado = await concentradoVentas();
+        const { fecha } = req.query;
+        const concentrado = await concentradoVentas(fecha);
         res.status(200).send(concentrado);
     }catch(error){ res.status(400).send('Error al obtener el concentrado de datos'); }
-})
+});
 
-// app.get("/detalleVentas", async (req, res) => {
-//     try{
-//         const today = new Date();
-//         const yyyy = today.getFullYear();
-//         const mm = String(today.getMonth() + 1).padStart(2, '0'); // Los meses van de 0 a 11
-//         const dd = String(today.getDate()).padStart(2, '0');
-//         const fecha = { fecha: `${yyyy}-${mm}-${dd}` };
-//         console.log("Solo la fecha ALVVVVVVVVVVVVVV");
-//         const ventasTotalMes = await cantVentasPbsMes(fecha);
-//         const ingresosTotalMes = await totalVentasPbsMes(fecha);
-//         const pbsVendidoMes = await pbsMasVendidoMes(fecha);
-//         const clienteFrecMes = await clienteFrecuenteMes(fecha);
-//         console.log("Fetch Data PERROOOOOOOOOOOOOOOOOOO");
+/*
+   ********************************************
+                FeedBack!
+   ********************************************
+*/
 
-//         // Agrupar los datos necesarios en un solo objeto
-//         const responseData = [{
-//             TOTAL: ventasTotalMes.TOTAL,
-//             VENTAS: ingresosTotalMes.VENTAS,
-//             ID_PBS: pbsVendidoMes.ID_PBS,
-//             COMPRAS: clienteFrecMes.COMPRAS
-//         }];
-//         console.log("Response perro: ", responseData)
-//         // Enviar el objeto agrupado en el response
-//         res.status(200).send(responseData);
-
-//     }catch(err){ res.status(400).send('Error al obtener uno de los detalles de ventas'); }
-// });
+app.post("/feedback", async (req, res) => {
+    try{
+        const [interfazAtractiva, interfazFacilUso, sistemaFunciona, informacionAccesible, gustoSistema, sugerencia] = req.body;
+        const feedback = await createFeedBack(interfazAtractiva, interfazFacilUso, sistemaFunciona, informacionAccesible, gustoSistema, sugerencia);
+        res.status(201).send(feedback);
+    }catch(err){ res.status(400).send('Error al enviar el feedback', err); }
+});

@@ -1,4 +1,5 @@
 import jsPdf from 'jspdf';
+import autoTable from 'jspdf-autotable';
 
 function addFooter(doc, margin, pageWidth, pageHeight, auth) {
     const pageCount = doc.getNumberOfPages();
@@ -31,18 +32,29 @@ function addFooter(doc, margin, pageWidth, pageHeight, auth) {
 }
 
 
-export function exportPdf(divElement, auth) { // Recibe el id del elemento div
+export function exportPdf(divElement, auth, detalleTable) { // Recibe el id del elemento div
     const doc = new jsPdf();
     const element = document.getElementById(divElement);
 
+    const headTable = [['Marca', 'Clave', 'Pzas Vendidas', 'Pzas Restantes']];
 
     doc.html(element, {
         callback: function (pdf) {
             addFooter(pdf, 15, pdf.internal.pageSize.getWidth(), pdf.internal.pageSize.getHeight(), auth);
+            pdf.addPage();
+            autoTable(pdf, {
+                head: headTable,
+                body: detalleTable.map(row => [row.MARCA, row.CLAVE, row.PZAS_VENDIDAS, row.PZAS_RESTANTES]),
+                startY: 20,
+                margin: { horizontal: 10 },
+                styles: { fontSize: 10 },
+                headStyles: { fillColor: [68, 68, 68] },
+                theme: 'grid'
+            });
             pdf.save('ReporteVentas.pdf')
         },
         x: 15,
         y: 0,
-        html2canvas : { scale: 0.16 }
+        html2canvas : { scale: 0.18 }
     });
 }

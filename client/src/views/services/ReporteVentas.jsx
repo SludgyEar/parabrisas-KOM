@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import '../styles/reporteVentasStyle.css'
 import { useAuth } from '../providers/UserProvider'
 import axios from 'axios';
@@ -32,6 +32,7 @@ const ReporteVentas = () => {
     const [ingresos, setIngresos] = useState({});
     const [claveMasVendida, setClaveVendida] = useState({});
     const [clienteFrecuente, setClienteFrecuente] = useState({});
+    const [detalleTable, setDetalleTable] = useState([]);
     // Graficas
     const [barData, setBarData] = useState(null);
     const [pieData, setPieData] = useState(null);
@@ -66,11 +67,13 @@ const ReporteVentas = () => {
             const clave = await axios.get("http://localhost:5000/claveMasVendida", { params: fecha });
             const cliente = await axios.get("http://localhost:5000/clienteFrecuente", { params: fecha });
             const dataGraph = await axios.get("http://localhost:5000/cantVentasGrafica", { params: fecha });
+            const detalle = await axios.get("http://localhost:5000/concentradoVentas", { params: fecha });
 
             setCantVentas(ventas.data);
             setIngresos(ingr.data);
             setClaveVendida(clave.data);
             setClienteFrecuente(cliente.data);
+            setDetalleTable(detalle.data);
             if (tipoGrafica === 'pie') {
                 const mesesPieTemp = dataGraph.data.map(item => item?.MES);
                 const ventasPieTemp = dataGraph.data.map(item => item?.TOTAL_VENTAS);
@@ -227,10 +230,32 @@ const ReporteVentas = () => {
                             </p>
                         </div>
                         <div className="button-container">
-                            <button onClick={() => { exportPdf('reporteVentasPage',auth) }}>Guardar</button>
+                            <button onClick={() => { exportPdf('reporteVentasPage', auth, detalleTable) }}>Guardar</button>
                             <button id="cancelar-button" onClick={toggleOverlayReport}>Cancelar</button>
+                            <h4>Nota: Se incorpora una tabla con el concentrado a detalle de las ventas realizadas este mes.</h4>
                         </div>
-                        
+                            <div className="table-detalle-content">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Marca</th>
+                                            <th>Clave</th>
+                                            <th>Piezas Vendidas</th>
+                                            <th>Piezas Restantes</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {Array.isArray(detalleTable) && detalleTable.map((detail, index) => (
+                                            <tr key={index}>
+                                                <td>{detail?.MARCA}</td>
+                                                <td>{detail?.CLAVE}</td>
+                                                <td>{detail?.PZAS_VENDIDAS}</td>
+                                                <td>{detail?.PZAS_RESTANTES}</td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
                     </div>
                 </div>
             )}
