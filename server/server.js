@@ -1,7 +1,9 @@
 import express from 'express';
 import { getUsers, getUserById, createUser, loginUser, getUserByEmail, getUserByName, logicalDelete,
         updateUser, updateUserWPasswd, getActiveUsers, getInactiveUsers, getUserPasswd, getUserByPerfil, 
-        getAllPbs, getPbsByMark, getPbsByKey, getPbsByState, updatePbsStock, getPbsKeyByKey, createPbs } from './database.js';
+        getAllPbs, getPbsByMark, getPbsByKey, getPbsByState, updatePbsStock, getPbsKeyByKey, createPbs, 
+        getCitas, createCita, getCitaByDate, getUserIDToCita, checkAvailableCita, getTelRFC, cantVentasPbsMes, totalVentasPbsMes,
+        pbsMasVendidoMes, clienteFrecuenteMes, cantVentasGrafica, concentradoVentas, createFeedBack } from './database.js';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import CryptoJS from "crypto-js";
@@ -173,13 +175,139 @@ app.post("/upload" , upload.single('archivo'), async (req, res) => {
             const {clave_pbs, marca_pbs, precio_pbs, stock_pbs} = pbs;
             const existingPbs = await getPbsKeyByKey(clave_pbs);
 
-            if(existingPbs.clave_pbs === clave_pbs){
+            if(existingPbs && existingPbs.CLAVE_PBS === clave_pbs){
                 await updatePbsStock(clave_pbs, precio_pbs, stock_pbs);
                 console.log("Actualizado");
             }else {
                 await createPbs(clave_pbs, marca_pbs, precio_pbs, stock_pbs);
+                console.log("Creado");
             }
         }
 
     } catch ( error ){ console.log(error); }
+});
+
+
+/*
+   ********************************************
+                Citas de usuario!
+   ********************************************
+*/
+
+app.get('/citas', async (req, res) => {
+    const {idUsr} = req.query;
+    const citas = await getCitas(idUsr);
+    res.status(201).send(citas);
+});
+
+app.get('/clientCita', async (req, res) => {
+    try{
+        const {fullName, email} = req.query;
+        const user = await getUserIDToCita(fullName, email);
+        res.status(200).send(user);
+    }catch(err){ res.status(400).send('Error al obtener la cita'); }
+});
+
+app.post('/crearCita', async (req, res) => {
+    try{
+        const { id_usr, fecha, motivo } = req.body;
+        // console.log(id_usr, fecha, motivo);
+        const cita = await createCita(id_usr, fecha, motivo);
+        res.status(201).send(cita);
+    }catch(err){ res.status(400).send('Error al crear la cita'); }
+});
+
+app.get('/citas/:date', async (req, res) => {
+    try{
+        const cita = req.params.date;
+        const state = await checkAvailableCita(cita);
+        res.status(201).send(state);
+    } catch (err) { res.status(400).send('Error al obtener la cita o Cita no encontrada'); }
+});
+
+/*
+   ********************************************
+                Ventas de Pbs!
+   ********************************************
+*/
+app.get("/clientData", async (req, res) => {
+    const { nombreClient, emailClient } = req.query;
+    console.log(nombreClient, emailClient);
+    try {
+        const clientData = await getTelRFC(nombreClient, emailClient);
+        res.status(201).send(clientData);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error al obtener los datos del cliente o cliente no encontrado');
+    }
+});
+
+app.get("/cantVentasPbsMes", async (req, res) => {
+    try{
+        const { fecha } = req.query;
+        const ventas = await cantVentasPbsMes(fecha);
+        console.log("Cant",ventas);
+        res.status(200).send(ventas);
+    }catch(err){ res.status(400).send('Error al obtener la cantidad de ventas por mes'); }
+    // Obtiene la cantidad de ventas dado un mes
+});
+
+app.get("/totalVentasPbsMes", async (req, res) => {
+    try{
+        const { fecha } = req.query;
+        const ventas = await totalVentasPbsMes(fecha);
+        console.log("Total",ventas);
+        res.status(200).send(ventas);
+
+    }catch(err){ res.status(400).send('Error al obtener el total de ventas por mes'); }
+    // Obtiene el total de ventas dado un mes
+});
+
+app.get('/claveMasVendida', async (req, res) => {
+    try{
+        const { fecha } = req.query;
+        const clave = await pbsMasVendidoMes(fecha);
+        console.log("Clave",clave);
+        res.status(200).send(clave);
+    } catch (err) { res.status(400).send('Error al obtener la clave más vendida',err); }
+});
+
+app.get('/clienteFrecuente', async (req, res) => {
+    try{
+        const { fecha } = req.query;
+        const clienteFrecuente = await clienteFrecuenteMes(fecha);
+        console.log("Cliente",clienteFrecuente);
+        res.status(200).send(clienteFrecuente);
+    }catch(err){ res.status(400).send('Error al obtener el cliente frecuente',err); }
+});
+
+// Cuatro funciones antes de cantVentasGrafica
+app.get("/cantVentasGrafica", async (req, res) => {
+    try{
+        const { fecha } = req.query;
+        const ventas = await cantVentasGrafica(fecha);
+        res.status(201).send(ventas);
+    } catch(err) { res.status(400).send('Error al obtener la cantidad de ventas por mes'); }
+});
+
+app.get("/concentradoVentas", async (req, res) => {
+    try{
+        const { fecha } = req.query;
+        const concentrado = await concentradoVentas(fecha);
+        res.status(200).send(concentrado);
+    }catch(error){ res.status(400).send('Error al obtener el concentrado de datos'); }
+});
+
+/*
+   ********************************************
+                FeedBack!
+   ********************************************
+*/
+
+app.post("/feedback", async (req, res) => {
+    try{
+        const [interfazAtractiva, interfazFacilUso, sistemaFunciona, informacionAccesible, gustoSistema, sugerencia] = req.body;
+        const feedback = await createFeedBack(interfazAtractiva, interfazFacilUso, sistemaFunciona, informacionAccesible, gustoSistema, sugerencia);
+        res.status(201).send(feedback);
+    }catch(err){ res.status(400).send('Error al enviar el feedback', err); }
 });

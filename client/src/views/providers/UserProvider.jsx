@@ -7,6 +7,9 @@ const UserContext = createContext({ // Nuestro hooke
     handleAdmin : () => {},
     user: {},
     handleUser: () => {},
+    feedback: false,
+    handleFeedback: () => {},
+    handleLogout: () => {},
 });
 
 export function UserProvider( { children }){
@@ -25,9 +28,20 @@ export function UserProvider( { children }){
         setIsAuth(state);
     }
 
+    // Esta función se usa al cerrar la sesión, activa una bandera que /home recibe y muestra una encuesta
+    const [feedback, setFeedback] = useState(false);
+    const handleFeedback = () => {
+        setFeedback(!feedback);
+    }
+    
+    const handleLogout = () => {
+        setUser({});
+        setIsAdmin(false);
+        setIsAuth(false);
+    };
 
     return(
-        <UserContext.Provider value={{ isAuth, handleAuth, isAdmin, handleAdmin, user, handleUser }}>
+        <UserContext.Provider value={{ isAuth, handleAuth, isAdmin, handleAdmin, user, handleUser, feedback, handleFeedback, handleLogout }}>
             {children}
         </UserContext.Provider>
     );

@@ -5,8 +5,10 @@ import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 
 import ImportarPortal from './ImportarPortal';
+import { useAuth } from '../providers/UserProvider';
 
 const Catalogo = () => {
+    const auth = useAuth();
     
     const  [pbs, setPbs] = useState([]);
 
@@ -109,7 +111,7 @@ const Catalogo = () => {
                 <button id='export-btn' onClick={() => exportToPDF(pbs)}>Exportar</button>
             </div>
             {/* {children} */}
-            <ImportarPortal/>
+            {auth.isAdmin && <ImportarPortal />}
         </div>
     );
 };

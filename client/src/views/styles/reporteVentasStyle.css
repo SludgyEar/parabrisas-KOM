@@ -1,0 +1,156 @@
+/* Botón */
+.toggle-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* Fondo de la superposición */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    overflow-y: auto;
+}
+
+/* Contenido del div superpuesto */
+.overlay-content {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    max-height: 90vh;
+    overflow-y: auto;
+    margin: 20px;
+    align-items: center;
+}
+
+.overlay-content button{
+    width: 90px;
+    height: 28px;
+    background-color: #007B9E;
+    color: #fff;
+    border: 2px solid #005f73;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.overlay-content button:hover {
+    background-color: #ff0000;
+    transform: scale(1.05);
+}
+
+.input-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+
+.input-wrapper input {
+    width: 300px;
+    padding: 5px;
+    font-size: 16px;
+    border: 2px solid #007B9E;
+    border-radius: 5px;
+    color: #3e3939;
+    outline: none;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+    margin-bottom: 20px;
+}
+
+.input-wrapper select {
+    width: 300px;
+    padding: 5px;
+    font-size: 16px;
+    border: 2px solid #007B9E;
+    border-radius: 5px;
+    color: #3e3939;
+    outline: none;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+    margin-bottom: 15px;
+    margin-top: 10px;
+
+}
+
+.input-wrapper button {
+    width: 90px;
+    height: 28px;
+    background-color: #007B9E;
+    color: #fff;
+    border: 2px solid #005f73;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-bottom: 15px;
+}
+
+.input-wrapper button:hover {
+    background-color: #005f73;
+    transform: scale(1.05);
+}
+
+.reporteVentas {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 75%;
+}
+
+.reporteVentas p {
+    font-size: 20px;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+.button-container{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.button-container button {
+    width: 90px;
+    height: 28px;
+    background-color: #007B9E;
+    color: #fff;
+    border: 2px solid #005f73;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+.button-container button:hover {
+    background-color: #005f73;
+    transform: scale(1.05);
+}
+
+#cancelar-button:hover{
+    background-color: #ff0000;
+    transform: scale(1.05);
+}
+
+.table-detalle-content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 75%;
+    
+}

@@ -2,6 +2,8 @@ import React, { use, useState } from 'react';
 import "../styles/adminDashBoard.css"; // Importa el archivo CSS
 import Catalogo from "../services/Catalogo";
 import { useAuth } from "../providers/UserProvider";
+import Perfil from '../services/Perfil';
+import { useNavigate } from 'react-router-dom';
 
 
 function AdminDashBoard(){
@@ -13,6 +15,8 @@ function AdminDashBoard(){
         setSelectedService(service);
     };
 
+    const navigate = useNavigate();
+
     return (
         <div className="dashboard">
             {/* Barra superior */}
@@ -21,8 +25,8 @@ function AdminDashBoard(){
                 <div className="userMenu">
                     <span>Administrador {user.user.NOMBRE_USR}!</span>
                     <div className="userDropdown">
-                        <button>Perfil</button>
                         <button>Cerrar sesión</button>
+                        <button onClick={() => { navigate('/adminCrud') }}>Administrador</button>
                     </div>
                 </div>
             </header>
@@ -62,7 +66,7 @@ function AdminDashBoard(){
                         </div>}
                     {selectedService === "perfil" &&
                         <div>
-                            Contenido del Perfil
+                            <Perfil />
                         </div>}
                     {selectedService === "facturas" &&
                         <div>

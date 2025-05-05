@@ -1,18 +1,69 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { FaRegUserCircle, FaPencilAlt, FaRegWindowClose } from "react-icons/fa";
+import { useAuth } from '../providers/UserProvider';
+import '../styles/perfilStyle.css';
 
 const Perfil = () => {
-    
+    const auth = useAuth();
+    const [usuario, setUsuario] = useState({});
+    const handleSetUsuario = () =>{
+        setUsuario(auth.user);
+    };
+    const handleEditUsuario = (e) =>{
+        setUsuario(prev => ({...prev, [e.target.name]: e.target.value}));
+    };
+
+    useEffect(() => {
+        handleSetUsuario();
+    },[]);
+
+    const [showModal, setShowModal] = useState(true);
+    const [showConfirm, setShowConfirm] = useState(false);
 
     return (
-        <div className="user-profile-container p-6 bg-white rounded-lg shadow-md max-w-md mx-auto">
-            <h2 className="text-2xl font-bold text-gray-800">Perfil del Usuario</h2>
-            <div className="mt-6 space-y-4">
-                <p><strong>Nombre:</strong> {/* Aquí va el nombre del usuario */}</p>
-                <p><strong>Correo:</strong> {/* Aquí va el correo del usuario */}</p>
-                <p><strong>Teléfono:</strong> {/* Aquí va el teléfono del usuario */}</p>
-                <p><strong>Dirección:</strong> {/* Aquí va la dirección del usuario */}</p>
-                <button className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">Editar Perfil</button>
+        <div className="perfil-container">
+        {(showModal) ? (
+            <div className='perfil'>
+                <div className="edit-container">
+                    <button onClick={() => { setShowModal(prev => !prev) }}> <FaPencilAlt /> </button>
+                </div>
+                <div className="top-container">
+                    <FaRegUserCircle size={100} />
+                </div>
+                <div className="info-container">
+                    <h1>Nombre: {usuario.NOMBRE_USR}</h1>
+                    <h3>Telefono: </h3>
+                    <h3>Correo: {usuario.CORREO_USR}</h3>
+                    <h3>Status: {(usuario.STATUS_USR = '1') ? "Activo" : "Inactivo"}</h3>
+                </div>
             </div>
+        ):(    
+            <div id="edit-perfil-modal">
+                <div className="top-modal">
+                    <div className='label-modal'>
+                        <h2>Edición:</h2>
+                    </div>
+                    <div className='close-modal'>
+                    <button onClick={() => { setShowModal(prev => !prev); setShowConfirm(false) }}> <FaRegWindowClose/> </button>
+                    </div>
+                </div>
+                <form className='edit-form'>
+                    <label htmlFor="name">Nombre</label>
+                    <input type="text" name='name' placeholder={usuario.NOMBRE_USR} onChange={handleEditUsuario} />
+
+                    <label htmlFor="tel">Teléfono:</label>
+                    <input type="numeric" name='tel' onChange={handleEditUsuario} />
+
+                    <label htmlFor="correo">Correo</label>
+                    <input type="email" name='correo' placeholder={usuario.CORREO_USR} onChange={handleEditUsuario} />
+                
+                    {!showConfirm && <button id='guardar-edit' onClick={() => { setShowConfirm(prev => !prev) }} type='button'> Guardar</button>}
+                    {showConfirm && <button id='confirm-edit'  >Confirmar</button>} {/* Editar usuario en la BD*/}
+                    
+                    
+                </form>
+            </div>
+        )}
         </div>
     );
 };
