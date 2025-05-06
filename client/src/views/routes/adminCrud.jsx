@@ -119,8 +119,8 @@ const AdminCrud = () => {
                 </div>
                 <nav>
                     <ul>
-                        <li><a href="#">Inicio</a></li>
-                        <li><a href="#">Usuarios</a></li>
+                        <li><u>Inicio</u></li>
+                        <li><u>Usuarios</u></li>
                     </ul>
                 </nav>
             </header>
@@ -267,7 +267,7 @@ const AdminCrud = () => {
             <footer className="footer">
                 <strong>
                     <p>Contacto: info@parabrisaskom.com | Tel: +52 123 456 7890</p>
-                    <p><a href="#">Términos y Condiciones</a></p>
+                    <p><u>Términos y Condiciones</u></p>
                 </strong>
             </footer>
         </div>

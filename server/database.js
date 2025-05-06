@@ -41,11 +41,11 @@ export async function getUserPasswd(id) {
     // Regresa la contraseña de un usuario dado un ID
 }
 
-export async function createUser(nombre, correo, passwd, perfil, status) {
+export async function createUser(nombre, correo, passwd, tel, full_name, perfil, status) {
     const [result] = await pool.query(`
-        INSERT INTO USUARIOS (NOMBRE_USR, CORREO_USR, PASSWD_USR, PERFIL_USR, STATUS_USR)
-        VALUES (?, ?, ?, ?, ?)
-        `, [nombre, correo, passwd, perfil, status]);   // Si no se recibe el perfil y status, en la base de datos se asignan valores por defecto
+        INSERT INTO USUARIOS (NOMBRE_USR, CORREO_USR, PASSWD_USR, TEL_USR, FULL_NAME_USR, PERFIL_USR, STATUS_USR)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+        `, [nombre, correo, passwd, tel, full_name, perfil, status]);   // Si no se recibe el perfil y status, en la base de datos se asignan valores por defecto
     const id = result.insertId  // Obtenemos el id que se generó al insertar el registro
     return getUserById(id);     // Desplegamos los datos del registro que acabamos de insertar
 }

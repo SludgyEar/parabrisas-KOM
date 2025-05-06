@@ -85,8 +85,8 @@ app.put("/changePasswd/:id/:passwd", async (req, res) => {
 });
 
 app.post("/register", async (req, res) => {
-    const {nombre, correo, passwd, perfil, status} = req.body;
-    const user = await createUser(nombre, correo, passwd, perfil, status);
+    const {nombre, correo, passwd, tel, full_name, perfil, status} = req.body;
+    const user = await createUser(nombre, correo, passwd, tel, full_name, perfil, status);
     res.status(201).send(user);
     console.log("Usuario registrado exitosamente");
     // Crear usuario

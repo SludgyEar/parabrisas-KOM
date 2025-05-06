@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import '../styles/test2Style.css';
 import '../styles/catalogo.css';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
@@ -87,16 +88,18 @@ const Catalogo = () => {
     };
 
     return (
-        <div className="container">
-            {selectedPbs.slice(0, 2).map((product, index) => (
-                <div key={index} className="card">
-                    <h2 className="title">{product.marca_pbs}</h2>
-                    <p className="info">Clave: {product.clave_pbs}</p>
-                    <p className="info">Precio: ${product.precio_pbs}</p>
-                    <p className="info">Stock: {product.stock_pbs}</p>
-                    <p className="info">Estado: {product.estado_pbs}</p>
-                </div>
-            ))}
+        <div className="container-catalogo">
+            <div className='card-container'>
+                {selectedPbs.slice(0, 2).map((product, index) => (
+                    <div key={index} className="card">
+                        <h2 className="title">{product.marca_pbs}</h2>
+                        <p className="info">Clave: {product.clave_pbs}</p>
+                        <p className="info">Precio: ${product.precio_pbs}</p>
+                        <p className="info">Stock: {product.stock_pbs}</p>
+                        <p className="info">Estado: {product.estado_pbs}</p>
+                    </div>
+                ))}
+            </div>
             <div className='navegationContainer' id='navegationContainer'>
                 {/* botones de filtrado */}
                 <button className="filtro-select" onClick={handleFiltro} name="clave">Clave</button>
@@ -109,9 +112,8 @@ const Catalogo = () => {
                 <button className='navegation' onClick={handlePrev} disabled={currtPage === 0}>Anterior</button>
                 <button className='navegation' onClick={handleNext} disabled={startIndex + pbsPerPage >= pbs.length}>Siguiente</button>
                 <button id='export-btn' onClick={() => exportToPDF(pbs)}>Exportar</button>
+                {auth.isAdmin && <ImportarPortal />}
             </div>
-            {/* {children} */}
-            {auth.isAdmin && <ImportarPortal />}
         </div>
     );
 };

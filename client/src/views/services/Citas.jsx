@@ -46,7 +46,8 @@ const Citas = () => {
     
     useEffect(() => {
         handleSetDisponible();
-    }, [fechaCita, disponible,setIsModalOpen]);
+        // eslint-disable-next-line
+    }, [fechaCita, disponible,setIsModalOpen, handleSetDisponible]);
     return (
         <div className="citas-container">
             <h1>Citas</h1>

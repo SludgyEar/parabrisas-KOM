@@ -1,8 +1,7 @@
-import React, { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 import "../styles/homeStyle.css"; // Archivo CSS para estilos
 import { useAuth } from "../providers/UserProvider";
-import FeedBack from "../services/FeedBack";
 
 function Home() {
     const navigate = useNavigate();
@@ -46,7 +45,7 @@ function Home() {
             <footer className="footer">
                 <strong>
                     <p>Contacto: info@parabrisaskom.com | Tel: +52 123 456 7890</p>
-                    <p><a href="#">Términos y Condiciones</a></p>
+                    <p><u>Términos y Condiciones</u></p>
                 </strong>
             </footer>
         </div>

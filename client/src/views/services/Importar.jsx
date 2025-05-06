@@ -31,7 +31,6 @@ export default function Importar({ onClose }) {
             return;
         }
 
-        setLoading(true);
         setError("");
 
         const formData = new FormData();
@@ -50,6 +49,7 @@ export default function Importar({ onClose }) {
                 fileInputRef.current.value = "";
             }
             setLoading(false);
+            onClose();
         } catch (err) {
             setError("Error al importar el archivo. Inténtalo de nuevo.");
         }

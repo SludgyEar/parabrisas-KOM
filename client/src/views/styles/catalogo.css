@@ -1,17 +1,23 @@
-.container {
+.container-catalogo {
     display: flex;
     flex-direction: row;
     justify-content: center;
     gap: 70px;
     padding: 20px;
+    height: 100%;
+    width: 100%;
     background-color: #f0f0f0;
     border-radius: 15px;
-    flex: 0 0 auto;
+}
+
+.card-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
 }
 
 .card {
-    width: 200px;
-    height: 300px;
     background-color: white;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
@@ -20,20 +26,11 @@
     flex-direction: column;
     justify-content: space-between;
     text-align: center;
-    flex: 0 0 auto;
+    margin-left: 10px;
+    margin-right: 10px;
+
 }
 
-.title {
-    font-size: 20px;
-    font-weight: bold;
-}
-
-.info {
-    font-size: 16px;
-}
-
-/* Modificación: Se cambia el contenedor de navegación para que los elementos se organicen en dos filas.
-   El formulario ocupará la fila completa y los botones quedarán en la siguiente. */
 .navegationContainer {
     display: flex;
     flex-wrap: wrap;
@@ -41,6 +38,8 @@
     align-items: center;
     margin: 20px 0;
     gap: 10px;
+    width: 100%;
+    height: 100%;
 }
 
 .navegationContainer form {
@@ -81,7 +80,6 @@
     transition: background-color 0.3s ease;
 }
 
-/* Notar que la clase .searchForm se ignora, ya que usamos el form dentro de .navegationContainer */
 .searchInput {
     padding: 10px;
     font-size: 16px;
@@ -106,9 +104,6 @@
     background-color: #45a049;
 }
 
-/*
-    Filtrado
-*/
 .filtro-select {
     font-size: 12px;
     padding: 5px 10px;

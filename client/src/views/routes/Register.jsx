@@ -1,91 +1,74 @@
-import React, {useState} from "react";
-import { useNavigate, Link, Navigate } from "react-router-dom";
+import React, { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
-import "../styles/registerStyle.css"; // Asegúrate de importar tu CSS
 import { useAuth } from "../providers/UserProvider";
+import "../styles/registerStyle.css"
+
 
 function Register() {
+    const navigate = useNavigate();
+    const auth = useAuth();
+    if (auth.isAuth) {
+        navigate("/");
+    }
 
     const [usuario, setUsuario] = useState({
         nombre: "",
         correo: "",
         passwd: "",
+        tel: "",
+        full_name: "",
         perfil: "A",
         status: "1"
     });
-
-    const navigate = useNavigate();
-
     const handleChange = (e) => {
-        setUsuario(prev=>({...prev, [e.target.name]: e.target.value}));
+        setUsuario(prev => ({ ...prev, [e.target.name]: e.target.value }));
     };
 
-    const handleSubmit = async (e) =>{
+    const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             const res = await axios.post("http://localhost:5000/register", usuario);
             if (res.status === 201) {
                 navigate("/login");
             }
-        } catch (err) {console.log(err);}
+        } catch (err) { console.log(err); }
     };
 
-    const auth = useAuth();
-    if (auth.isAuth) {
-        return <Navigate to="/userDashBoard" />;
-    }
 
     return (
         <div>
-            <header className="header">
+            <header className='header-register'>
                 <div className="logo" id="logo">
                     <Link to="/"> <h1 className="logo" id="nombre-logo">Parabrisas Kom</h1> </Link>
                 </div>
             </header>
-
-            <main className="main">
-                <div className="register-box">
-                    <h1>Registro de usuario</h1>
+            <main>
+                <div className="register-content">
+                    <h1>Registro de Usuario</h1>
                     <form onSubmit={handleSubmit}>
-                        <label htmlFor="username">Username</label>
-                        <input
-                        type="text"
-                        onChange={handleChange}
-                        name="nombre"
-                        id="username"
-                        placeholder="Ingresa tu nombre de usuario"
-                        required
-                        />
-
-                        <label htmlFor="email">Email</label>
-                        <input
-                        type="text"
-                        onChange={handleChange}
-                        name="correo"
-                        id="email"
-                        placeholder="Ingresa tu correo"
-                        required
-                        />
-
-                        <label htmlFor="password">Contraseña</label>
-                        <input
-                        type="password"
-                        onChange={handleChange}
-                        name="passwd"
-                        id="password"
-                        placeholder="Ingresa tu contraseña"
-                        required
-                        />
-                        <button type="submit" >Registrarse</button>
-                        <button type="button" onClick={() => navigate("/")}>Cancelar</button>
+                        <div className="register-input-wrapper">
+                            <input type="text" placeholder='UserName' onChange={handleChange} name="nombre" required />
+                            <input type="text" placeholder='Nombre Completo' onChange={handleChange} name="full_name" required />
+                        </div>
+                        <div className='register-input-wrapper'>
+                            <input type="email" placeholder='Correo Electrónico' onChange={handleChange} name="correo" required />
+                            <input type="tel" placeholder='Teléfono' onChange={handleChange} name="tel" required />
+                        </div>
+                        <div className='register-input-wrapper'>
+                            <input type="password" placeholder='Contraseña' onChange={handleChange} name="passwd" required />
+                        </div>
+                        <div className="register-input-wrapper">
+                            <button type="submit" className="register-button">Registrar</button>
+                            <button className='register-button' onClick={() => navigate("/")}>Cancelar</button>
+                        </div>
                     </form>
                 </div>
             </main>
-
-            <footer className="footer">
+            <footer className='footer-register'>
                 <strong>
                     <p>Contacto: info@parabrisaskom.com | Tel: +52 123 456 7890</p>
-                    <p><a href="#">Términos y Condiciones</a></p>
+                    <p><u>Términos y Condiciones</u></p>
                 </strong>
             </footer>
         </div>
