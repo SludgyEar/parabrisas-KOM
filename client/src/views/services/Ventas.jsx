@@ -3,6 +3,7 @@ import '../styles/ventasStyle.css';
 import { useAuth } from '../providers/UserProvider';
 import axios from 'axios';
 import ReporteVentas from './ReporteVentas';
+const apiUrl = process.env.REACT_APP_API_URL;
 
 function Ventas() {
     const auth = useAuth();
@@ -25,7 +26,7 @@ function Ventas() {
             *   Se hace una petición al back para obtener el RFC y el teléfono
             *   Es decir, esta función se ejecuta en un useEffect[client.emailClient]
             */
-            const response = await axios.get("http://localhost:5000/clientData", {
+            const response = await axios.get(`${apiUrl}/clientData`, {
                 params: { nombreClient: client.nombreClient, emailClient: client.emailClient }
             });
             if (response.status === 201) {

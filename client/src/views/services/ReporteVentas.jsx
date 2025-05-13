@@ -25,6 +25,7 @@ ChartJS.register(
     Legend
 );
 
+const apiUrl = process.env.REACT_APP_API_URL;
 
 const ReporteVentas = () => {
     // Datos
@@ -62,12 +63,12 @@ const ReporteVentas = () => {
     // Obtención de datos para la gráfica
     const handleFetchData = async () => {
         try {
-            const ventas = await axios.get("http://localhost:5000/cantVentasPbsMes", { params: fecha });
-            const ingr = await axios.get("http://localhost:5000/totalVentasPbsMes", { params: fecha });
-            const clave = await axios.get("http://localhost:5000/claveMasVendida", { params: fecha });
-            const cliente = await axios.get("http://localhost:5000/clienteFrecuente", { params: fecha });
-            const dataGraph = await axios.get("http://localhost:5000/cantVentasGrafica", { params: fecha });
-            const detalle = await axios.get("http://localhost:5000/concentradoVentas", { params: fecha });
+            const ventas = await axios.get(`${apiUrl}/cantVentasPbsMes`, { params: fecha });
+            const ingr = await axios.get(`${apiUrl}/totalVentasPbsMes`, { params: fecha });
+            const clave = await axios.get(`${apiUrl}/claveMasVendida`, { params: fecha });
+            const cliente = await axios.get(`${apiUrl}/clienteFrecuente`, { params: fecha });
+            const dataGraph = await axios.get(`${apiUrl}/cantVentasGrafica`, { params: fecha });
+            const detalle = await axios.get(`${apiUrl}/concentradoVentas`, { params: fecha });
 
             setCantVentas(ventas.data);
             setIngresos(ingr.data);

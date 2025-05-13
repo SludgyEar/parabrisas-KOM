@@ -4,6 +4,7 @@ import axios from "axios";
 import { useAuth } from "../providers/UserProvider";
 import "../styles/registerStyle.css"
 
+const apiUrl = process.env.REACT_APP_API_URL;
 
 function Register() {
     const navigate = useNavigate();
@@ -28,7 +29,7 @@ function Register() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.post("http://localhost:5000/register", usuario);
+            const res = await axios.post(`${apiUrl}/register`, usuario);
             if (res.status === 201) {
                 navigate("/login");
             }

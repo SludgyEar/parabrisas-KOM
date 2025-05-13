@@ -3,6 +3,7 @@ import "../styles/feedBackStyle.css"; // Archivo CSS para estilos
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
+const apiUrl = process.env.REACT_APP_API_URL;
 
 export default function FeedBack() {
     const navigate = useNavigate();
@@ -47,7 +48,7 @@ export default function FeedBack() {
 
     const handleSendFeedBack = () => {
         try{
-            axios.post("http://localhost:5000/feedback", respuestas);
+            axios.post(`${apiUrl}/feedback`, respuestas);
         }catch(err){ console.error(err) }
     };
 

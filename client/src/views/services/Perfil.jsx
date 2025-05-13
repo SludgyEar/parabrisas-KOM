@@ -6,14 +6,16 @@ import '../styles/perfilStyle.css';
 const Perfil = () => {
     const auth = useAuth();
     const [usuario, setUsuario] = useState({});
-    const handleSetUsuario = () =>{
-        setUsuario(auth.user);
-    };
+
     const handleEditUsuario = (e) =>{
         setUsuario(prev => ({...prev, [e.target.name]: e.target.value}));
     };
 
     useEffect(() => {
+        const handleSetUsuario = () => {
+            setUsuario(auth.user);
+        };
+        
         handleSetUsuario();
     },[]);
 

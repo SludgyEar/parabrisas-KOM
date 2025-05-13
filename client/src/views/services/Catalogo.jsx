@@ -8,6 +8,8 @@ import autoTable from 'jspdf-autotable';
 import ImportarPortal from './ImportarPortal';
 import { useAuth } from '../providers/UserProvider';
 
+const apiUrl = process.env.REACT_APP_API_URL;
+
 const Catalogo = () => {
     const auth = useAuth();
     
@@ -15,7 +17,7 @@ const Catalogo = () => {
 
     const getPbs = async () => {
         try{   
-            const response = await axios.get('http://localhost:5000/parabrisas');
+            const response = await axios.get(`${apiUrl}/parabrisas`);
             setPbs(response.data);
         }catch (err) { console.log(err); }
     };
@@ -76,7 +78,7 @@ const Catalogo = () => {
         try {
             let response = null;
             if(chosenPbs.value){
-                response = await axios.get("http://localhost:5000/parabrisas",{
+                response = await axios.get(`${apiUrl}/parabrisas`,{
                     params: { [filtro.tipo]: chosenPbs.value}
                 });
                 setPbs(response.data);

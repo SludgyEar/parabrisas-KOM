@@ -3,6 +3,8 @@ import axios from "axios";
 import "../styles/adminStyle.css";
 import { Link } from "react-router-dom";
 
+const apiUrl = process.env.REACT_APP_API_URL;
+
 const AdminCrud = () => {
     // Cambio de divs por estado
     const [shFirst, setShFirst] = useState(true);   // En un principio se muestra el div de insert
@@ -24,7 +26,7 @@ const AdminCrud = () => {
         e.preventDefault();
         try {
             const form = e.target;
-            await axios.post("http://localhost:5000/register", user);
+            await axios.post(`${apiUrl}/register`, user);
             form.nombre.value = form.correo.value = form.passwd.value = '';
             form.perfil.value = "A";
             form.status.value = "1";
@@ -56,7 +58,7 @@ const AdminCrud = () => {
                 perfil: "A",
                 status: "1"
             });
-            await axios.put(`http://localhost:5000/update/${usuario.id}`, usuario);
+            await axios.put(`${apiUrl}/update/${usuario.id}`, usuario);
             getCurrUsrs();
 
         }catch(err){ console.log(err); }
@@ -73,7 +75,7 @@ const AdminCrud = () => {
     const [currUsrs, setCurrUsrs] = useState([]);   // Lista de usuarios a desplegar
     const getCurrUsrs = async () =>{
         try {
-            const response = await axios.get("http://localhost:5000/usuarios"); // Se cambio la ruta de la petición de usuarios activos a todos los usuarios
+            const response = await axios.get(`${apiUrl}/usuarios`); // Se cambio la ruta de la petición de usuarios activos a todos los usuarios
             setCurrUsrs(response.data);
         } catch (err) { console.log(err); }
     };
@@ -96,7 +98,7 @@ const AdminCrud = () => {
         try {
             let response = null;
             if (valueUsr.value) {
-                response = await axios.get("http://localhost:5000/usuarios", {
+                response = await axios.get(`${apiUrl}/usuarios`, {
                     params: { [filtro.tipo]: valueUsr.value } // Usa el tipo de filtro como clave
                 });
                 setCurrUsrs(response.data); // Actualiza la lista de usuarios
@@ -228,7 +230,7 @@ const AdminCrud = () => {
                                                     e.preventDefault();
                                                     try{
                                                         let idToDelete = usuario.id_usr;
-                                                        await axios.put(`http://localhost:5000/delete/${idToDelete}`);  // Así se busca un parámetro correctamente
+                                                        await axios.put(`${apiUrl}/delete/${idToDelete}`);  // Así se busca un parámetro correctamente
                                                         getCurrUsrs();
 
                                                     }catch(err){console.log(err);}

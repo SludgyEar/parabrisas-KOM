@@ -32,7 +32,6 @@ function Home() {
                             <button onClick={ () => {
                                 auth.handleFeedback();
                                 console.log("Feedback: ", auth.feedback);
-                                
                                 navigate('/feedback');
                             } }>Aceptar</button>
                             <button onClick={() => auth.handleFeedback()}>Cerrar</button>
