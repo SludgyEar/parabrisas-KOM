@@ -5,6 +5,8 @@ import CryptoJS from "crypto-js";
 import axios from "axios";
 import { useAuth } from "../providers/UserProvider";
 
+const apiUrl = process.env.REACT_APP_API_URL;
+
 function App() {
     const [email, setEmail] = useState({
         email: ""
@@ -38,7 +40,7 @@ function App() {
         e.preventDefault();
         const encryptedPasswd = CryptoJS.SHA256(passwd).toString();
         try {   // res contiene  NOMBRE_USR, CORREO_USR, STATUS_USR, PERFIL_USR
-            const res = await axios.post("http://localhost:5000/login", { correo: email, passwd: encryptedPasswd }); 
+            const res = await axios.post(`${apiUrl}/login`, { correo: email, passwd: encryptedPasswd }); 
             if (res.status === 201) {
                 auth.handleAuth(true);
                 if(res.data.PERFIL_USR === 'C'){

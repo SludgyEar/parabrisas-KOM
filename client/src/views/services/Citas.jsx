@@ -4,6 +4,8 @@ import { useAuth } from '../providers/UserProvider';
 import axios from 'axios';
 import Modal from '../services/Modal';
 
+const apiUrl = process.env.REACT_APP_API_URL;
+
 const Citas = () => {
     const auth = useAuth();
     // Selección de servicio
@@ -21,7 +23,7 @@ const Citas = () => {
     const [disponible, setDisponible] = useState(null);
     const handleSetDisponible = async () => {
         try {
-            let response = await axios.get(`http://localhost:5000/citas/${fechaCita}`);
+            let response = await axios.get(`${apiUrl}/citas/${fechaCita}`);
             setDisponible(response.data);
         } catch (err) { console.log(err) }
     };
@@ -36,7 +38,7 @@ const Citas = () => {
         try {
             if (disponible) {
                 // const usuario = await axios.get("http://localhost:5000/clientCita", {params})
-                await axios.post("http://localhost:5000/crearCita", { id_usr: auth.user.ID_USR, fecha: fechaCita, motivo: motivo });
+                await axios.post(`${apiUrl}/crearCita`, { id_usr: auth.user.ID_USR, fecha: fechaCita, motivo: motivo });
             }
             setIsModalOpen(true);
         } catch (err) { console.log(err) }
