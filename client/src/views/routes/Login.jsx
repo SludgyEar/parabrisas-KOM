@@ -61,9 +61,9 @@ function App() {
                 </div>
                 <nav>
                     <ul>
-                        <li><a href="#">Inicio</a></li>
-                        <li><a href="#">Productos</a></li>
-                        <li><a href="#">Contacto</a></li>
+                        <li><u>Inicio</u></li>
+                        <li><u>Productos</u></li>
+                        <li><u>Contacto</u></li>
                     </ul>
                 </nav>
             </header>
@@ -103,7 +103,7 @@ function App() {
             <footer className="footer">
                 <strong>
                     <p>Contacto: info@parabrisaskom.com | Tel: +52 123 456 7890</p>
-                    <p><a href="#">Términos y Condiciones</a></p>
+                    <p><u>Términos y Condiciones</u></p>
                 </strong>
             </footer>
         </div>

@@ -12,10 +12,22 @@ import Papa from 'papaparse';
 import Xlsx from 'xlsx';
 
 
+// const corsOptions = {
+//     origin: ['http://localhost:3000', 'https://parabrisas-kom.ngrok-free.app'],
+//     // 2. Métodos HTTP permitidos
+//     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // OPTIONS es clave para CORS
+//     // 3. Headers permitidos
+//     allowedHeaders: [
+//         'Content-Type',
+//         'ngrok-skip-browser-warning' // Para evitar el HTML de ngrok
+//     ],
+// };
+
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cors());
+// app.use(cors(corsOptions));
 
 app.get("/usuarios", async (req, res) => {
     const { id, nombre, correo, status, perfil } = req.query; // Cambiado: Ahora se obtienen los parámetros de consulta
@@ -124,6 +136,10 @@ app.listen(5000, ()=>{
    ********************************************
 */
 
+app.get("/test", (req, res) => {
+    res.status(200).json({ message: "Hello Postman!"});
+});
+
 app.get("/parabrisas", async (req, res) => {
     const {marca, clave, estado} = req.query;
     let pbs = [];
@@ -139,7 +155,8 @@ app.get("/parabrisas", async (req, res) => {
     }else {
         pbs = await getAllPbs();
     }
-    res.status(200).send(pbs);
+    console.log("Objeto recibido en el servidor: ", pbs);
+    res.status(200).json(pbs);
 });
 
 //uploadFileHandler:

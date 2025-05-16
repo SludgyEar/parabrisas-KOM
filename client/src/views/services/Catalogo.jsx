@@ -17,8 +17,13 @@ const Catalogo = () => {
 
     const getPbs = async () => {
         try{   
-            const response = await axios.get(`${apiUrl}/parabrisas`);
+            const response = await axios.get(`${apiUrl}/parabrisas`, {
+                headers: {
+                    'ngrok-skip-browser-warning': 'true'
+                }
+            });
             setPbs(response.data);
+            console.log("Objeto recibido en el cliente: ", response.data);
         }catch (err) { console.log(err); }
     };
     useEffect(() => {
@@ -79,7 +84,10 @@ const Catalogo = () => {
             let response = null;
             if(chosenPbs.value){
                 response = await axios.get(`${apiUrl}/parabrisas`,{
-                    params: { [filtro.tipo]: chosenPbs.value}
+                    params: { [filtro.tipo]: chosenPbs.value},
+                    headers: {
+                        'ngrok-skip-browser-warning': 'true'
+                    }
                 });
                 setPbs(response.data);
             }else {
