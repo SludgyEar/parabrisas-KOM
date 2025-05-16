@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import "../styles/importar.css";
-import axios from "axios";
+import api from "../utils/axiosConfig";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
@@ -42,7 +42,7 @@ export default function Importar({ onClose }) {
             // Aquí simularemos el proceso de carga
             // En una implementación real, enviarías el archivo al backend... el archivo esta contenido en selectedFile
 
-            await axios.post(`${apiUrl}/upload`, formData, { headers: { 'Content-Type': 'multipart/form-data' } });
+            await api.post(`${apiUrl}/upload`, formData, { headers: { 'Content-Type': 'multipart/form-data' } });
 
             // Si todo sale bien:
             setSuccess(`Archivo "${selectedFile.name}" importado exitosamente`);

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from '../utils/axiosConfig';
 import '../styles/test2Style.css';
 import '../styles/catalogo.css';
 import jsPDF from 'jspdf';
@@ -17,11 +17,7 @@ const Catalogo = () => {
 
     const getPbs = async () => {
         try{   
-            const response = await axios.get(`${apiUrl}/parabrisas`, {
-                headers: {
-                    'ngrok-skip-browser-warning': 'true'
-                }
-            });
+            const response = await api.get(`${apiUrl}/parabrisas`);
             setPbs(response.data);
             console.log("Objeto recibido en el cliente: ", response.data);
         }catch (err) { console.log(err); }
@@ -83,11 +79,8 @@ const Catalogo = () => {
         try {
             let response = null;
             if(chosenPbs.value){
-                response = await axios.get(`${apiUrl}/parabrisas`,{
-                    params: { [filtro.tipo]: chosenPbs.value},
-                    headers: {
-                        'ngrok-skip-browser-warning': 'true'
-                    }
+                response = await api.get(`${apiUrl}/parabrisas`,{
+                    params: { [filtro.tipo]: chosenPbs.value}
                 });
                 setPbs(response.data);
             }else {

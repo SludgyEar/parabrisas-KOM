@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import api from "../utils/axiosConfig";
 import "../styles/adminStyle.css";
 import { Link } from "react-router-dom";
 
@@ -26,7 +26,7 @@ const AdminCrud = () => {
         e.preventDefault();
         try {
             const form = e.target;
-            await axios.post(`${apiUrl}/register`, user);
+            await api.post(`${apiUrl}/register`, user);
             form.nombre.value = form.correo.value = form.passwd.value = '';
             form.perfil.value = "A";
             form.status.value = "1";
@@ -58,7 +58,7 @@ const AdminCrud = () => {
                 perfil: "A",
                 status: "1"
             });
-            await axios.put(`${apiUrl}/update/${usuario.id}`, usuario);
+            await api.put(`${apiUrl}/update/${usuario.id}`, usuario);
             getCurrUsrs();
 
         }catch(err){ console.log(err); }
@@ -75,7 +75,7 @@ const AdminCrud = () => {
     const [currUsrs, setCurrUsrs] = useState([]);   // Lista de usuarios a desplegar
     const getCurrUsrs = async () =>{
         try {
-            const response = await axios.get(`${apiUrl}/usuarios`); // Se cambio la ruta de la petición de usuarios activos a todos los usuarios
+            const response = await api.get(`${apiUrl}/usuarios`); // Se cambio la ruta de la petición de usuarios activos a todos los usuarios
             setCurrUsrs(response.data);
         } catch (err) { console.log(err); }
     };
@@ -98,7 +98,7 @@ const AdminCrud = () => {
         try {
             let response = null;
             if (valueUsr.value) {
-                response = await axios.get(`${apiUrl}/usuarios`, {
+                response = await api.get(`${apiUrl}/usuarios`, {
                     params: { [filtro.tipo]: valueUsr.value } // Usa el tipo de filtro como clave
                 });
                 setCurrUsrs(response.data); // Actualiza la lista de usuarios
@@ -230,7 +230,7 @@ const AdminCrud = () => {
                                                     e.preventDefault();
                                                     try{
                                                         let idToDelete = usuario.id_usr;
-                                                        await axios.put(`${apiUrl}/delete/${idToDelete}`);  // Así se busca un parámetro correctamente
+                                                        await api.put(`${apiUrl}/delete/${idToDelete}`);  // Así se busca un parámetro correctamente
                                                         getCurrUsrs();
 
                                                     }catch(err){console.log(err);}

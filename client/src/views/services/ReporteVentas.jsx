@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../styles/reporteVentasStyle.css'
 import { useAuth } from '../providers/UserProvider'
-import axios from 'axios';
+import api from "../utils/axiosConfig";
 import { Bar, Pie } from 'react-chartjs-2';
 import {
     Chart as ChartJS,
@@ -63,12 +63,12 @@ const ReporteVentas = () => {
     // Obtención de datos para la gráfica
     const handleFetchData = async () => {
         try {
-            const ventas = await axios.get(`${apiUrl}/cantVentasPbsMes`, { params: fecha });
-            const ingr = await axios.get(`${apiUrl}/totalVentasPbsMes`, { params: fecha });
-            const clave = await axios.get(`${apiUrl}/claveMasVendida`, { params: fecha });
-            const cliente = await axios.get(`${apiUrl}/clienteFrecuente`, { params: fecha });
-            const dataGraph = await axios.get(`${apiUrl}/cantVentasGrafica`, { params: fecha });
-            const detalle = await axios.get(`${apiUrl}/concentradoVentas`, { params: fecha });
+            const ventas = await api.get(`${apiUrl}/cantVentasPbsMes`, { params: fecha });
+            const ingr = await api.get(`${apiUrl}/totalVentasPbsMes`, { params: fecha });
+            const clave = await api.get(`${apiUrl}/claveMasVendida`, { params: fecha });
+            const cliente = await api.get(`${apiUrl}/clienteFrecuente`, { params: fecha });
+            const dataGraph = await api.get(`${apiUrl}/cantVentasGrafica`, { params: fecha });
+            const detalle = await api.get(`${apiUrl}/concentradoVentas`, { params: fecha });
 
             setCantVentas(ventas.data);
             setIngresos(ingr.data);

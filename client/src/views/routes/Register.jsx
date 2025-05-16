@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import axios from "axios";
+import api from "../utils/axiosConfig";
 import { useAuth } from "../providers/UserProvider";
 import "../styles/registerStyle.css"
 
@@ -29,7 +29,7 @@ function Register() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.post(`${apiUrl}/register`, usuario);
+            const res = await api.post(`${apiUrl}/register`, usuario);
             if (res.status === 201) {
                 navigate("/login");
             }
