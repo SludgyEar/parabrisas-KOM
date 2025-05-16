@@ -19,7 +19,6 @@ const Catalogo = () => {
         try{   
             const response = await api.get(`${apiUrl}/parabrisas`);
             setPbs(response.data);
-            console.log("Objeto recibido en el cliente: ", response.data);
         }catch (err) { console.log(err); }
     };
     useEffect(() => {

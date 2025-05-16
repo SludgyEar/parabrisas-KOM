@@ -155,7 +155,6 @@ app.get("/parabrisas", async (req, res) => {
     }else {
         pbs = await getAllPbs();
     }
-    console.log("Objeto recibido en el servidor: ", pbs);
     res.status(200).json(pbs);
 });
 
